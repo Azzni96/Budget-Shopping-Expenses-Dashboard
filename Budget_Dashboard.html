@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="fi" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>💰 Budget Shopping Expenses Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="langboxTop">
+    <div class="langbox" aria-label="Language">
+      <a href="home.html" class="backHomeBtn" id="backHome" title="Back to Home">🏠</a>
+      <button id="langFI" type="button">FI</button>
+      <button id="langEN" type="button">EN</button>
+      <button id="langAR" type="button">AR</button>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <header>
+      <div class="clockContainer">
+        <div class="clock" id="liveTime">00:00:00</div>
+      </div>
+
+      <div>
+        <h1 id="t_appTitle">💰 Budget Shopping Expenses Dashboard</h1>
+        <div class="sub" id="t_appSubtitle">Track your shopping list, budget allocation, and expenses. All data saved in your browser (localStorage).</div>
+      </div>
+
+      <div class="topbar">
+        <nav>
+          <button class="tab active" data-page="dashboard" id="tabDashboard">📊 Dashboard</button>
+          <button class="tab" data-page="shopping" id="tabShopping">🛒 Shopping List</button>
+          <button class="tab" data-page="expenses" id="tabExpenses">💳 Expenses</button>
+          <button class="tab" data-page="budget" id="tabBudget">💰 Budget</button>
+        </nav>
+      </div>
+    </header>
+
+    <!-- PAGES -->
+    <!-- DASHBOARD PAGE -->
+    <div id="page_dashboard">
+      <div class="grid">
+        <section class="card">
+          <div class="small" id="t_dashSummary">📅 Summary</div>
+          <div class="big" id="dashDate">​</div>
+          <div style="margin-top:12px" id="dashboardStats"></div>
+        </section>
+
+        <section class="card">
+          <div class="small" id="t_dashShoppingToBuy">🛒 Shopping to Buy</div>
+          <div class="big" id="dashShoppingCount">0</div>
+          <div id="dashShoppingList" style="font-size:13px;line-height:1.8;margin-top:12px;max-height:300px;overflow-y:auto"></div>
+        </section>
+
+        <section class="card">
+          <div class="small" id="t_dashBudgetStatus">💰 Budget Status</div>
+          <div id="dashBudgetStatus" style="font-size:13px;line-height:1.8"></div>
+        </section>
+
+        <section class="card">
+          <div class="small" id="t_dashMonthlyExpenses">💳 This Month's Expenses</div>
+          <div class="big" id="dashMonthlyTotal">€0.00</div>
+          <div id="dashExpensesBreakdown" style="font-size:13px;line-height:1.8;margin-top:12px" ></div>
+        </section>
+      </div>
+    </div>
+
+    <!-- SHOPPING PAGE -->
+    <div id="page_shopping" style="display:none;">
+      <div class="grid">
+        <section class="card">
+          <div class="totals">
+            <div>
+              <div class="small" id="t_shoppingSmall">Shopping</div>
+              <div class="big" id="t_shoppingBig">Smart list</div>
+            </div>
+            <div>
+              <div class="small" id="t_shoppingCount">Items</div>
+              <div class="big" id="shoppingCount">0</div>
+            </div>
+          </div>
+
+          <div>
+            <label id="t_shoppingItem" for="shoppingItem">Item</label>
+            <input id="shoppingItem" type="text" placeholder="e.g. Milk, Bread..." maxlength="80" />
+          </div>
+
+          <div class="row2" style="margin-top:10px;">
+            <div>
+              <label id="t_shoppingCategory" for="shoppingCategory">Category</label>
+              <select id="shoppingCategory">
+                <option value="Groceries">🛒 Groceries</option>
+                <option value="Home">🏠 Home</option>
+                <option value="Tech">💻 Tech</option>
+                <option value="Clothes">👕 Clothes</option>
+                <option value="Other">📦 Other</option>
+              </select>
+            </div>
+            <div>
+              <label id="t_shoppingPriority" for="shoppingPriority">Priority</label>
+              <select id="shoppingPriority">
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="btns">
+            <button class="action primary" id="shoppingAddBtn" type="button">Add item</button>
+            <button class="action" id="shoppingClearBtn" type="button">Clear</button>
+            <button class="action" id="shoppingExportBtn" type="button">Export</button>
+            <button class="action" id="shoppingImportBtn" type="button">Import</button>
+            <button class="action danger" id="shoppingWipeBtn" type="button">Delete ALL</button>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="small" id="t_shoppingListTitle">Shopping list</div>
+          <div class="big" id="t_shoppingListBig">Tap to buy</div>
+
+          <div style="margin-top:12px" class="list" id="shoppingList"></div>
+          <div id="shoppingEmpty" class="empty" style="display:none;margin-top:10px">No items.</div>
+        </section>
+      </div>
+    </div>
+
+    <!-- EXPENSES PAGE -->
+    <div id="page_expenses" style="display:none;">
+      <div class="grid">
+        <section class="card">
+          <div class="totals">
+            <div>
+              <div class="small" id="t_expSelectedMonth">Selected month</div>
+              <div class="big" id="expMonthTitle">—</div>
+            </div>
+            <div>
+              <div class="small" id="t_expTotalLabel">Total</div>
+              <div class="big" id="expMonthTotal">0,00 €</div>
+            </div>
+          </div>
+
+          <div class="row2">
+            <div>
+              <label for="expDate" id="t_expDateLabel">Date</label>
+              <input id="expDate" type="date" />
+            </div>
+            <div>
+              <label for="expMonthFilter" id="t_expMonthFilterLabel">Show month</label>
+              <input id="expMonthFilter" type="month" />
+            </div>
+          </div>
+
+          <div class="row2" style="margin-top:10px;">
+            <div>
+              <label for="expName" id="t_expNameLabel">Purchase</label>
+              <input id="expName" type="text" placeholder="e.g. groceries" maxlength="60" />
+            </div>
+            <div>
+              <label for="expAmount" id="t_expAmountLabel">Amount (€)</label>
+              <input id="expAmount" type="number" inputmode="decimal" step="0.01" min="0" placeholder="3.50" />
+            </div>
+          </div>
+
+          <div class="btns">
+            <button class="action primary" id="expAddBtn" type="button">Add purchase</button>
+            <button class="action" id="expPdfBtn" type="button">Export PDF</button>
+            <button class="action" id="expExportBtn" type="button">Export JSON</button>
+            <button class="action" id="expImportBtn" type="button">Import JSON</button>
+            <button class="action" id="expClearBtn" type="button">Clear fields</button>
+            <button class="action danger" id="expWipeBtn" type="button">Delete ALL</button>
+          </div>
+
+          <div class="hint" id="t_expHint">
+            Note: PDF library is loaded from the internet (CDN). Offline bundle is possible.
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="small" id="t_expListTitle">Purchases (selected month)</div>
+          <div class="big"><span id="expCount">0</span></div>
+
+          <div style="margin-top:12px" class="list" id="expList"></div>
+          <div id="expEmpty" class="empty" style="display:none;margin-top:10px">No purchases.</div>
+        </section>
+      </div>
+    </div>
+
+    <!-- BUDGET PAGE -->
+    <div id="page_budget" style="display:none;">
+      <div class="grid">
+        <section class="card">
+          <div class="totals">
+            <div>
+              <div class="small" id="t_budgetSmall">Budget</div>
+              <div class="big" id="t_budgetBig">Track finances</div>
+            </div>
+            <div>
+              <div class="small" id="t_budgetCount">Amounts</div>
+              <div class="big" id="budgetCount">0</div>
+            </div>
+          </div>
+
+          <div class="row2">
+            <div>
+              <label id="t_budgetMonth" for="budgetFilterMonth">Month</label>
+              <input id="budgetFilterMonth" type="month" />
+            </div>
+            <div>
+              <label id="t_budgetBudget" for="budgetAmount">Budget (€)</label>
+              <input id="budgetAmount" type="number" step="0.01" min="0" placeholder="1000" />
+            </div>
+          </div>
+
+          <div class="btns">
+            <button class="action primary" id="budgetSaveBtn" type="button">Set budget</button>
+            <button class="action" id="budgetExportBtn" type="button">Export</button>
+            <button class="action" id="budgetImportBtn" type="button">Import</button>
+            <button class="action danger" id="budgetWipeBtn" type="button">Clear</button>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="small" id="t_budgetSummary">Analysis</div>
+          <div style="margin-top:12px;font-size:13px;line-height:1.8" id="budgetAnalysis"></div>
+        </section>
+      </div>
+    </div>
+
+  <!-- jsPDF (PDF export for expenses) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <!-- Application logic -->
+  <script src="script.js"></script>
+</body>
+</html>

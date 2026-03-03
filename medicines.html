@@ -34,20 +34,23 @@
         }
 
         .back-button {
-            padding: 8px 15px;
+            padding: 10px 18px;
             border: 2px solid white;
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.15);
             color: white;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s;
+            font-weight: 600;
+            transition: all 0.3s ease;
             text-decoration: none;
             display: inline-block;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
         .back-button:hover {
-            background: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
         }
 
         .language-selector {
@@ -56,23 +59,26 @@
         }
 
         .lang-btn {
-            padding: 8px 15px;
+            padding: 10px 18px;
             border: 2px solid white;
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.15);
             color: white;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
         .lang-btn.active {
             background: white;
             color: #667eea;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
         }
 
         .lang-btn:hover {
-            background: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
         }
 
         header {
@@ -93,164 +99,265 @@
         }
 
         .input-section {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
             margin-bottom: 30px;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .input-section > div:not(#timeSelectors) {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr auto;
-            gap: 10px;
-            align-items: end;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        #timeSelectors {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+            min-height: 80px;
+            visibility: visible;
         }
 
         .input-group {
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            gap: 8px;
         }
 
         .input-group label {
-            font-weight: bold;
-            color: #667eea;
-            font-size: 0.9em;
+            font-weight: 600;
+            color: #333;
+            font-size: 0.95em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        .input-section input {
+        .input-section input,
+        .input-section select {
             padding: 12px 15px;
             border: 2px solid #e0e0e0;
-            border-radius: 5px;
+            border-radius: 8px;
             font-size: 1em;
-            transition: border-color 0.3s;
+            transition: all 0.3s ease;
+            background: white;
+            font-family: inherit;
         }
 
-        .input-section input:focus {
+        .input-section input:focus,
+        .input-section select:focus {
             outline: none;
             border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            background: #f8f9ff;
+        }
+
+        .input-section select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 18px;
+            padding-right: 40px;
+            color: #333;
+        }
+
+        .input-section select:hover {
+            border-color: #764ba2;
         }
 
         .input-section button {
-            padding: 12px 25px;
-            background: #667eea;
+            grid-column: 1 / -1;
+            padding: 14px 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            border-radius: 5px;
-            font-size: 1em;
+            border-radius: 8px;
+            font-size: 1.1em;
             cursor: pointer;
-            transition: background 0.3s;
-            font-weight: bold;
+            transition: all 0.3s ease;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
         }
 
         .input-section button:hover {
-            background: #764ba2;
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .input-section button:active {
+            transform: translateY(0);
         }
 
         .medicine-list {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
         }
 
         .medicine-card {
             background: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            border-left: 5px solid #667eea;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            border-left: 6px solid #667eea;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .medicine-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        .medicine-card:hover {
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+            transform: translateY(-5px);
         }
 
         .medicine-card.completed {
-            opacity: 0.7;
+            opacity: 0.85;
             border-left-color: #10b981;
+            background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 100%);
+        }
+
+        .medicine-card.completed::before {
+            background: linear-gradient(90deg, #10b981, #059669);
         }
 
         .medicine-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 15px;
         }
 
         .medicine-name {
-            font-size: 1.3em;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 5px;
+            font-size: 1.4em;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 8px;
         }
 
         .medicine-dose {
-            color: #666;
-            font-size: 0.9em;
-            margin-bottom: 10px;
+            color: #6b7280;
+            font-size: 0.95em;
+            font-weight: 500;
         }
 
         .medicine-delete-btn {
-            background: #ef4444;
+            background: linear-gradient(135deg, #ef4444, #dc2626);
             color: white;
             border: none;
-            padding: 6px 12px;
-            border-radius: 3px;
+            padding: 8px 16px;
+            border-radius: 6px;
             cursor: pointer;
             font-size: 0.85em;
-            transition: background 0.3s;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(239, 68, 68, 0.2);
         }
 
         .medicine-delete-btn:hover {
-            background: #dc2626;
+            background: linear-gradient(135deg, #dc2626, #991b1b);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+            transform: translateY(-2px);
         }
 
         .intake-times {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
         }
 
         .intake-item {
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 10px;
-            background: #f9f9f9;
-            border-radius: 5px;
+            gap: 12px;
+            padding: 12px 14px;
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+
+        .intake-item:hover {
+            background: linear-gradient(135deg, #f0f1f3 0%, #e8eaed 100%);
+            border-color: #667eea;
         }
 
         .intake-item input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
+            width: 22px;
+            height: 22px;
             cursor: pointer;
+            accent-color: #667eea;
+            flex-shrink: 0;
         }
 
         .intake-item.checked {
-            background: #e8f5e9;
+            background: linear-gradient(135deg, #ecfdf5 0%, #dbeafe 100%);
+            border-color: #10b981;
+        }
+
+        .intake-item.checked input[type="checkbox"] {
+            accent-color: #10b981;
         }
 
         .intake-time {
-            font-weight: bold;
+            font-weight: 700;
             color: #667eea;
-            min-width: 100px;
+            min-width: 120px;
+            font-size: 0.95em;
+            text-transform: capitalize;
+        }
+
+        .intake-item.checked .intake-time {
+            color: #059669;
         }
 
         .intake-status {
             flex: 1;
             text-align: end;
+            font-weight: 600;
+            font-size: 0.9em;
         }
 
         .status-taken {
             color: #10b981;
-            font-weight: bold;
         }
 
         .status-pending {
             color: #f59e0b;
-            font-weight: bold;
         }
 
         .empty-message {
             text-align: center;
-            padding: 60px 20px;
+            padding: 80px 20px;
             color: white;
-            font-size: 1.2em;
-            opacity: 0.9;
+            font-size: 1.3em;
+            opacity: 0.95;
+            font-weight: 500;
+            letter-spacing: 0.5px;
         }
 
         @media (max-width: 768px) {
@@ -271,8 +378,9 @@
 
             .back-button {
                 text-align: center;
-                padding: 10px 15px;
+                padding: 12px 15px;
                 font-size: 0.9em;
+                border-radius: 8px;
             }
 
             .language-selector {
@@ -281,8 +389,9 @@
             }
 
             .lang-btn {
-                padding: 6px 12px;
+                padding: 10px 14px;
                 font-size: 0.85em;
+                border-radius: 6px;
             }
 
             header {
@@ -291,7 +400,7 @@
             }
 
             header h1 {
-                font-size: 1.5em;
+                font-size: 1.8em;
                 margin-bottom: 8px;
             }
 
@@ -300,29 +409,37 @@
             }
 
             .input-section {
-                grid-template-columns: 1fr;
-                padding: 15px;
-                gap: 8px;
+                padding: 20px;
                 margin-bottom: 20px;
+                border-radius: 12px;
+            }
+
+            .input-section > div:not(#timeSelectors) {
+                grid-template-columns: 1fr;
+            }
+
+            #timeSelectors {
+                grid-template-columns: 1fr;
             }
 
             .input-group {
-                gap: 3px;
+                gap: 6px;
             }
 
             .input-group label {
                 font-size: 0.85em;
             }
 
-            .input-section input {
-                padding: 10px 12px;
+            .input-section input,
+            .input-section select {
+                padding: 11px 12px;
                 font-size: 16px;
+                border-radius: 6px;
             }
 
             .input-section button {
-                padding: 10px 15px;
-                font-size: 0.9em;
-                width: 100%;
+                padding: 12px 20px;
+                font-size: 0.95em;
             }
 
             .medicine-list {
@@ -331,41 +448,42 @@
             }
 
             .medicine-card {
-                padding: 15px;
+                padding: 18px;
+                border-left-width: 4px;
             }
 
             .medicine-header {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 10px;
+                gap: 12px;
+                padding-bottom: 12px;
             }
 
             .medicine-delete-btn {
                 width: 100%;
-                padding: 8px 12px;
+                padding: 10px 12px;
             }
 
             .medicine-name {
-                font-size: 1.1em;
+                font-size: 1.2em;
             }
 
             .medicine-dose {
-                font-size: 0.85em;
+                font-size: 0.9em;
             }
 
             .intake-item {
-                padding: 8px;
-                gap: 8px;
+                padding: 10px 12px;
+                gap: 10px;
             }
 
             .intake-item input[type="checkbox"] {
                 width: 18px;
                 height: 18px;
-                flex-shrink: 0;
             }
 
             .intake-time {
-                min-width: 80px;
+                min-width: 90px;
                 font-size: 0.9em;
             }
 
@@ -381,18 +499,19 @@
 
         @media (max-width: 480px) {
             body {
-                padding: 5px;
+                padding: 8px;
             }
 
             .top-controls {
-                margin-bottom: 20px;
+                margin-bottom: 18px;
                 gap: 8px;
             }
 
             .back-button,
             .lang-btn {
-                padding: 6px 10px;
+                padding: 8px 10px;
                 font-size: 0.8em;
+                border-radius: 5px;
             }
 
             header {
@@ -401,7 +520,7 @@
             }
 
             header h1 {
-                font-size: 1.2em;
+                font-size: 1.3em;
                 margin-bottom: 5px;
             }
 
@@ -410,38 +529,52 @@
             }
 
             .input-section {
-                padding: 10px;
-                gap: 6px;
+                padding: 15px;
+                gap: 10px;
                 margin-bottom: 15px;
+                border-radius: 10px;
+            }
+
+            .input-section > div:not(#timeSelectors) {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            #timeSelectors {
+                grid-template-columns: 1fr;
+                gap: 10px;
+                padding: 10px;
+                border-radius: 8px;
             }
 
             .input-group label {
                 font-size: 0.8em;
             }
 
-            .input-section input {
-                padding: 8px 10px;
+            .input-section input,
+            .input-section select {
+                padding: 10px 10px;
                 font-size: 14px;
-                margin-bottom: 3px;
+                border-radius: 5px;
             }
 
             .input-section button {
                 padding: 10px 12px;
                 font-size: 0.85em;
-                width: 100%;
             }
 
             .medicine-list {
-                gap: 10px;
+                gap: 12px;
             }
 
             .medicine-card {
-                padding: 12px;
+                padding: 14px;
                 border-left-width: 3px;
+                border-radius: 10px;
             }
 
             .medicine-name {
-                font-size: 1em;
+                font-size: 1.1em;
             }
 
             .medicine-dose {
@@ -449,8 +582,8 @@
             }
 
             .medicine-delete-btn {
-                padding: 6px 10px;
-                font-size: 0.8em;
+                padding: 8px 10px;
+                font-size: 0.75em;
             }
 
             .intake-times {
@@ -458,9 +591,9 @@
             }
 
             .intake-item {
-                padding: 6px;
-                gap: 6px;
-                flex-wrap: wrap;
+                padding: 8px 10px;
+                gap: 8px;
+                border-radius: 6px;
             }
 
             .intake-item input[type="checkbox"] {
@@ -470,12 +603,11 @@
 
             .intake-time {
                 min-width: 70px;
-                font-size: 0.85em;
+                font-size: 0.8em;
             }
 
             .intake-status {
-                font-size: 0.8em;
-                flex-basis: 100%;
+                font-size: 0.75em;
             }
 
             .empty-message {
@@ -502,18 +634,21 @@
         </header>
 
         <div class="input-section">
-            <div class="input-group">
-                <label id="labelMedicineName">اسم الدواء</label>
-                <input type="text" id="medicineName" placeholder="مثال: أسبرين" autocomplete="off">
+            <div>
+                <div class="input-group">
+                    <label id="labelMedicineName">اسم الدواء</label>
+                    <input type="text" id="medicineName" placeholder="مثال: أسبرين" autocomplete="off">
+                </div>
+                <div class="input-group">
+                    <label id="labelDose">الجرعة</label>
+                    <input type="text" id="medicineDose" placeholder="مثال: 500mg">
+                </div>
+                <div class="input-group">
+                    <label id="labelTimes">عدد المرات</label>
+                    <input type="number" id="medicineTimes" min="1" max="10" value="1" onchange="updateTimeSelectors()">
+                </div>
             </div>
-            <div class="input-group">
-                <label id="labelDose">الجرعة</label>
-                <input type="text" id="medicineDose" placeholder="مثال: 500mg">
-            </div>
-            <div class="input-group">
-                <label id="labelTimes">عدد المرات</label>
-                <input type="number" id="medicineTimes" min="1" max="10" value="1">
-            </div>
+            <div id="timeSelectors"></div>
             <button onclick="addMedicine()" id="addBtn">إضافة</button>
         </div>
 
@@ -543,10 +678,10 @@
                 noon: "الظهيرة",
                 evening: "المساء",
                 night: "الليل",
-                time1: "المرة 1",
-                time2: "المرة 2",
-                time3: "المرة 3",
-                time4: "المرة 4"
+                afterMeal: "بعد الأكل",
+                beforeMeal: "قبل الأكل",
+                withMeal: "مع الأكل",
+                custom: "وقت مخصص"
             },
             en: {
                 backBtn: "← Back to Home",
@@ -567,10 +702,10 @@
                 noon: "Noon",
                 evening: "Evening",
                 night: "Night",
-                time1: "Time 1",
-                time2: "Time 2",
-                time3: "Time 3",
-                time4: "Time 4"
+                afterMeal: "After meal",
+                beforeMeal: "Before meal",
+                withMeal: "With meal",
+                custom: "Custom time"
             },
             fi: {
                 backBtn: "← Takaisin Etusivulle",
@@ -591,10 +726,10 @@
                 noon: "Päivä",
                 evening: "Ilta",
                 night: "Yö",
-                time1: "Aika 1",
-                time2: "Aika 2",
-                time3: "Aika 3",
-                time4: "Aika 4"
+                afterMeal: "Ruoan jälkeen",
+                beforeMeal: "Ennen ruokaa",
+                withMeal: "Ruoan kanssa",
+                custom: "Mukautettu aika"
             }
         };
 
@@ -614,35 +749,61 @@
         };
 
         function changeLanguage(lang) {
+            // Validate language
+            if (!lang || (lang !== 'ar' && lang !== 'en' && lang !== 'fi')) {
+                lang = 'ar';
+            }
+            
+            // Update global language variable
             currentLanguage = lang;
             localStorage.setItem('medicineLanguage', lang);
 
+            // Update language buttons
             document.querySelectorAll('.lang-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
-            document.querySelector(`[data-lang="${lang}"]`).classList.add('active');
+            const selectedBtn = document.querySelector(`[data-lang="${lang}"]`);
+            if (selectedBtn) {
+                selectedBtn.classList.add('active');
+            }
 
+            // Update HTML attributes
             const htmlElement = document.getElementById('htmlElement');
-            const dir = lang === 'ar' ? 'rtl' : 'ltr';
+            const dir = (lang === 'ar') ? 'rtl' : 'ltr';
             htmlElement.setAttribute('dir', dir);
             htmlElement.setAttribute('lang', lang);
+            document.body.style.direction = dir;
 
+            // Update all text and render with the updated language
             updateAllTexts();
-            renderMedicines();
+            updateTimeSelectors();
+            setTimeout(() => {
+                renderMedicines();
+            }, 50);
         }
 
         function updateAllTexts() {
             const t = translations[currentLanguage];
             
-            document.getElementById('pageTitle').textContent = t.pageTitle;
-            document.getElementById('backBtn').textContent = t.backBtn;
-            document.getElementById('mainTitle').textContent = t.mainTitle;
-            document.getElementById('mainSubtitle').textContent = t.mainSubtitle;
-            document.getElementById('labelMedicineName').textContent = t.labelMedicineName;
-            document.getElementById('labelDose').textContent = t.labelDose;
-            document.getElementById('labelTimes').textContent = t.labelTimes;
-            document.getElementById('addBtn').textContent = t.addBtn;
-            document.getElementById('emptyMsg').textContent = t.emptyMsg;
+            // Update all text content safely - check if element exists first
+            const elements = {
+                'pageTitle': t.pageTitle,
+                'backBtn': t.backBtn,
+                'mainTitle': t.mainTitle,
+                'mainSubtitle': t.mainSubtitle,
+                'labelMedicineName': t.labelMedicineName,
+                'labelDose': t.labelDose,
+                'labelTimes': t.labelTimes,
+                'addBtn': t.addBtn,
+                'emptyMsg': t.emptyMsg
+            };
+            
+            for (const [id, text] of Object.entries(elements)) {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.textContent = text;
+                }
+            }
         }
 
         function addMedicine() {
@@ -655,12 +816,31 @@
                 return;
             }
 
+            // Collect selected times for each dose
+            const timeLabels = [];
+            for (let i = 0; i < times; i++) {
+                const timeSelect = document.getElementById(`timeSelector${i}`);
+                let timeValue = '';
+                
+                if (timeSelect && timeSelect.value) {
+                    timeValue = timeSelect.value.trim();
+                }
+                
+                // If no value selected, use default
+                if (!timeValue) {
+                    timeValue = `${translations[currentLanguage].time} ${i + 1}`;
+                }
+                
+                timeLabels.push(timeValue);
+            }
+
             const medicine = {
                 id: Date.now(),
                 name: name,
                 dose: dose,
-                times: Math.min(times, 4),
-                intakes: Array(Math.min(times, 4)).fill(false)
+                times: Math.min(times, 10),
+                intakes: Array(Math.min(times, 10)).fill(false),
+                timeLabels: timeLabels
             };
 
             medicines.push(medicine);
@@ -670,7 +850,42 @@
             document.getElementById('medicineName').value = '';
             document.getElementById('medicineDose').value = '';
             document.getElementById('medicineTimes').value = '1';
+            document.getElementById('timeSelectors').innerHTML = '';
             document.getElementById('medicineName').focus();
+        }
+
+        function updateTimeSelectors() {
+            const times = parseInt(document.getElementById('medicineTimes').value) || 1;
+            const container = document.getElementById('timeSelectors');
+            container.innerHTML = '';
+
+            const t = translations[currentLanguage];
+            const timeOptions = [
+                { value: t.morning, label: t.morning },
+                { value: t.noon, label: t.noon },
+                { value: t.evening, label: t.evening },
+                { value: t.night, label: t.night },
+                { value: t.afterMeal, label: t.afterMeal },
+                { value: t.beforeMeal, label: t.beforeMeal },
+                { value: t.withMeal, label: t.withMeal },
+                { value: t.custom, label: t.custom }
+            ];
+
+            for (let i = 0; i < times; i++) {
+                const div = document.createElement('div');
+                div.className = 'input-group';
+                let select = `<label>${t.time} ${i + 1}</label><select id="timeSelector${i}" style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 6px; background: white; cursor: pointer; font-size: 14px; font-family: inherit; appearance: none; background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27currentColor%27 stroke-width=%272%27%3e%3cpolyline points=%276 9 12 15 18 9%27%3e%3c/polyline%3e%3c/svg%3e'); background-repeat: no-repeat; background-position: right 10px center; background-size: 18px; padding-right: 38px;">`;
+                
+                timeOptions.forEach((opt, idx) => {
+                    // Select first option as default
+                    const selected = idx === 0 ? 'selected' : '';
+                    select += `<option value="${opt.value}" ${selected}>${opt.label}</option>`;
+                });
+                
+                select += '</select>';
+                div.innerHTML = select;
+                container.appendChild(div);
+            }
         }
 
         function toggleIntake(medicineId, intakeIndex) {
@@ -696,40 +911,47 @@
 
         function renderMedicines() {
             const listContainer = document.getElementById('medicineList');
+            if (!listContainer) return;
+            
             listContainer.innerHTML = '';
 
-            if (medicines.length === 0) {
+            if (!medicines || medicines.length === 0) {
                 listContainer.innerHTML = `<div class="empty-message">${translations[currentLanguage].emptyMsg}</div>`;
                 return;
             }
 
             medicines.forEach(medicine => {
                 const card = document.createElement('div');
-                const allTaken = medicine.intakes.every(intake => intake);
+                const allTaken = medicine.intakes && medicine.intakes.every(intake => intake);
                 card.className = `medicine-card ${allTaken ? 'completed' : ''}`;
                 
                 const t = translations[currentLanguage];
                 let intakesHtml = '';
 
-                medicine.intakes.forEach((taken, index) => {
-                    const timeLabel = index < timeLabels[currentLanguage].length 
-                        ? timeLabels[currentLanguage][index]
-                        : timeLabelsFallback[currentLanguage][index];
-                    
-                    intakesHtml += `
-                        <div class="intake-item ${taken ? 'checked' : ''}">
-                            <input 
-                                type="checkbox" 
-                                ${taken ? 'checked' : ''} 
-                                onchange="toggleIntake(${medicine.id}, ${index})"
-                            >
-                            <span class="intake-time">${timeLabel}</span>
-                            <span class="intake-status ${taken ? 'status-taken' : 'status-pending'}">
-                                ${taken ? t.taken : t.pending}
-                            </span>
-                        </div>
-                    `;
-                });
+                if (medicine.intakes) {
+                    for (let index = 0; index < medicine.intakes.length; index++) {
+                        const taken = medicine.intakes[index];
+                        
+                        // Use custom time label if available, otherwise use default
+                        let timeLabel = medicine.timeLabels && medicine.timeLabels[index] 
+                            ? medicine.timeLabels[index]
+                            : `${t.time} ${index + 1}`;
+                        
+                        intakesHtml += `
+                            <div class="intake-item ${taken ? 'checked' : ''}">
+                                <input 
+                                    type="checkbox" 
+                                    ${taken ? 'checked' : ''} 
+                                    onchange="toggleIntake(${medicine.id}, ${index})"
+                                >
+                                <span class="intake-time">${timeLabel}</span>
+                                <span class="intake-status ${taken ? 'status-taken' : 'status-pending'}">
+                                    ${taken ? t.taken : t.pending}
+                                </span>
+                            </div>
+                        `;
+                    }
+                }
 
                 card.innerHTML = `
                     <div class="medicine-header">
@@ -770,8 +992,49 @@
             if (e.key === 'Enter') addMedicine();
         });
 
-        // Initialize
-        changeLanguage(currentLanguage);
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            // Validate and clean medicines data from localStorage
+            try {
+                let storedMedicines = JSON.parse(localStorage.getItem('medicines')) || [];
+                medicines = storedMedicines.map(med => ({
+                    id: med.id || Date.now(),
+                    name: med.name || '',
+                    dose: med.dose || '',
+                    times: med.intakes ? med.intakes.length : 1,
+                    intakes: Array.isArray(med.intakes) ? med.intakes : [false],
+                    timeLabels: Array.isArray(med.timeLabels) ? med.timeLabels : 
+                        Array.from({length: med.intakes ? med.intakes.length : 1}, (_, i) => `${translations[currentLanguage].time} ${i + 1}`)
+                }));
+            } catch (e) {
+                medicines = [];
+            }
+            saveMedicines();
+            
+            // Get saved language or default to Arabic
+            currentLanguage = localStorage.getItem('medicineLanguage') || 'ar';
+            
+            // Update initial button state
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            const initialBtn = document.querySelector(`[data-lang="${currentLanguage}"]`);
+            if (initialBtn) {
+                initialBtn.classList.add('active');
+            }
+            
+            // Set initial direction and language
+            const htmlElement = document.getElementById('htmlElement');
+            const dir = currentLanguage === 'ar' ? 'rtl' : 'ltr';
+            htmlElement.setAttribute('dir', dir);
+            htmlElement.setAttribute('lang', currentLanguage);
+            document.body.style.direction = dir;
+            
+            // Render initial state with current language
+            updateAllTexts();
+            updateTimeSelectors();
+            renderMedicines();
+        });
     </script>
 </body>
 </html>

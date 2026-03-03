@@ -189,6 +189,28 @@ nav {
   box-shadow: 0 0 10px rgba(79, 124, 255, 0.15);
 }
 
+.backHomeBtn {
+  border: 0;
+  padding: 8px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 900;
+  background: rgba(79, 124, 255, 0.2);
+  color: var(--text);
+  transition: var(--transition);
+  font-size: 16px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  border: 1px solid rgba(79, 124, 255, 0.3);
+  box-shadow: 0 0 10px rgba(79, 124, 255, 0.15);
+}
+
+.backHomeBtn:hover {
+  background: rgba(79, 124, 255, 0.35);
+  box-shadow: 0 0 20px rgba(79, 124, 255, 0.25);
+}
+
 .grid {
   display: grid;
   grid-template-columns: 1.05fr 0.95fr;

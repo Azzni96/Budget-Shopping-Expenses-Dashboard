@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="htmlElement">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">قائمة المهام</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            direction: rtl;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .input-section {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .input-section input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        .input-section input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .input-section button {
+            padding: 12px 25px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .input-section button:hover {
+            background: #764ba2;
+        }
+
+        .lists-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .list-section {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .list-header {
+            padding: 20px;
+            font-size: 1.3em;
+            font-weight: bold;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .list-header .badge {
+            background: rgba(255, 255, 255, 0.3);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .all-tasks .list-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .in-progress .list-header {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        }
+
+        .completed .list-header {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+
+        .list-content {
+            padding: 15px;
+            min-height: 300px;
+        }
+
+        .todo-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 15px;
+            background: #f9f9f9;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            transition: all 0.3s;
+            border-right: 4px solid #667eea;
+        }
+
+        .todo-item:hover {
+            background: #f0f0f0;
+            transform: translateX(-5px);
+        }
+
+        .todo-item.in-progress-item {
+            border-right-color: #f59e0b;
+        }
+
+        .todo-item.completed-item {
+            border-right-color: #10b981;
+            opacity: 0.8;
+        }
+
+        .todo-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .todo-text {
+            flex: 1;
+            word-break: break-word;
+        }
+
+        .todo-item.completed-item .todo-text {
+            text-decoration: line-through;
+            color: #999;
+        }
+
+        .todo-buttons {
+            display: flex;
+            gap: 5px;
+        }
+
+        .btn-small {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: all 0.3s;
+        }
+
+        .btn-progress {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .btn-progress:hover {
+            background: #d97706;
+        }
+
+        .btn-complete {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-complete:hover {
+            background: #059669;
+        }
+
+        .btn-delete {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-delete:hover {
+            background: #dc2626;
+        }
+
+        .empty-message {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+            font-style: italic;
+        }
+
+        .todo-item {
+            cursor: grab;
+        }
+
+        .todo-item:active {
+            cursor: grabbing;
+        }
+
+        .todo-item.dragging {
+            opacity: 0.5;
+            transform: rotate(5deg);
+        }
+
+        .list-content.drag-over {
+            background: rgba(102, 126, 234, 0.1);
+            border: 2px dashed #667eea;
+            border-radius: 5px;
+        }
+
+        .language-selector {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .lang-btn {
+            padding: 8px 15px;
+            border: 2px solid white;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .lang-btn.active {
+            background: white;
+            color: #667eea;
+        }
+
+        .lang-btn:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .back-button {
+            padding: 8px 15px;
+            border: 2px solid white;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .lists-container {
+                grid-template-columns: 1fr;
+            }
+
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .input-section {
+                flex-direction: column;
+            }
+
+            .language-selector {
+                position: static;
+                justify-content: center;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="language-selector">
+        <a href="home.html" class="back-button" id="backBtn">← الرجوع</a>
+        <button class="lang-btn active" data-lang="ar" onclick="changeLanguage('ar')">العربية</button>
+        <button class="lang-btn" data-lang="en" onclick="changeLanguage('en')">English</button>
+        <button class="lang-btn" data-lang="fi" onclick="changeLanguage('fi')">Suomi</button>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1 id="mainTitle">📝 قائمة مهامي</h1>
+            <p id="mainSubtitle">إدارة مهامك بكفاءة وسهولة</p>
+        </header>
+
+        <div class="input-section">
+            <input 
+                type="text" 
+                id="taskInput" 
+                placeholder="أضف مهمة جديدة..." 
+                autocomplete="off"
+            >
+            <button onclick="addTask()" id="addBtn">إضافة</button>
+        </div>
+
+        <div class="lists-container">
+            <!-- جميع المهام -->
+            <div class="list-section all-tasks">
+                <div class="list-header">
+                    <span id="allTasksTitle">📋 جميع المهام</span>
+                    <span class="badge" id="allCount">0</span>
+                </div>
+                <div class="list-content" id="allTasksList">
+                    <div class="empty-message" id="emptyMsg1">لا توجد مهام</div>
+                </div>
+            </div>
+
+            <!-- المهام في الشغل -->
+            <div class="list-section in-progress">
+                <div class="list-header">
+                    <span id="inProgressTitle">⏳ في الشغل</span>
+                    <span class="badge" id="progressCount">0</span>
+                </div>
+                <div class="list-content" id="progressTasksList">
+                    <div class="empty-message" id="emptyMsg2">لا توجد مهام جارية</div>
+                </div>
+            </div>
+
+            <!-- المهام المنتهية -->
+            <div class="list-section completed">
+                <div class="list-header">
+                    <span id="completedTitle">✅ المنتهية</span>
+                    <span class="badge" id="completedCount">0</span>
+                </div>
+                <div class="list-content" id="completedTasksList">
+                    <div class="empty-message" id="emptyMsg3">لا توجد مهام منتهية</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // قاموس الترجمات
+        const translations = {
+            ar: {
+                backBtn: "← الرجوع للصفحة الرئيسية",
+                pageTitle: "قائمة المهام",
+                mainTitle: "📝 قائمة مهامي",
+                mainSubtitle: "إدارة مهامك بكفاءة وسهولة",
+                taskInputPlaceholder: "أضف مهمة جديدة...",
+                addBtn: "إضافة",
+                allTasksTitle: "📋 جميع المهام",
+                inProgressTitle: "⏳ في الشغل",
+                completedTitle: "✅ المنتهية",
+                emptyMsg: "لا توجد مهام",
+                emptyMsgProgress: "لا توجد مهام جارية",
+                emptyMsgCompleted: "لا توجد مهام منتهية",
+                alertEmpty: "يرجى إدخال اسم المهمة",
+                confirmDelete: "هل أنت متأكد من حذف هذه المهمة؟",
+                btnStart: "➜ شغل",
+                btnStartCompact: "شغل",
+                btnComplete: "✓ نهاية",
+                btnCompleteCompact: "نهاية",
+                btnDelete: "🗑️ حذف",
+                btnDeleteCompact: "حذف",
+                btnBack: "← كل",
+                btnBackProgress: "← شغل"
+            },
+            en: {
+                backBtn: "← Back to Home",
+                pageTitle: "Task List",
+                mainTitle: "📝 My Tasks",
+                mainSubtitle: "Manage your tasks efficiently and easily",
+                taskInputPlaceholder: "Add a new task...",
+                addBtn: "Add",
+                allTasksTitle: "📋 All Tasks",
+                inProgressTitle: "⏳ In Progress",
+                completedTitle: "✅ Completed",
+                emptyMsg: "No tasks",
+                emptyMsgProgress: "No tasks in progress",
+                emptyMsgCompleted: "No completed tasks",
+                alertEmpty: "Please enter a task name",
+                confirmDelete: "Are you sure you want to delete this task?",
+                btnStart: "➜ Start",
+                btnStartCompact: "Start",
+                btnComplete: "✓ Done",
+                btnCompleteCompact: "Done",
+                btnDelete: "🗑️ Delete",
+                btnDeleteCompact: "Delete",
+                btnBack: "← All",
+                btnBackProgress: "← In Progress"
+            },
+            fi: {
+                backBtn: "← Takaisin Etusivulle",
+                pageTitle: "Tehtävälista",
+                mainTitle: "📝 Minun Tehtävät",
+                mainSubtitle: "Hallitse tehtäviäsi tehokkaasti ja helposti",
+                taskInputPlaceholder: "Lisää uusi tehtävä...",
+                addBtn: "Lisää",
+                allTasksTitle: "📋 Kaikki Tehtävät",
+                inProgressTitle: "⏳ Työn alla",
+                completedTitle: "✅ Valmistuneet",
+                emptyMsg: "Ei tehtäviä",
+                emptyMsgProgress: "Ei tehtäviä työn alla",
+                emptyMsgCompleted: "Ei valmiita tehtäviä",
+                alertEmpty: "Kirjoita tehtävän nimi",
+                confirmDelete: "Oletko varma, että haluat poistaa tämän tehtävän?",
+                btnStart: "➜ Aloita",
+                btnStartCompact: "Aloita",
+                btnComplete: "✓ Valmis",
+                btnCompleteCompact: "Valmis",
+                btnDelete: "🗑️ Poista",
+                btnDeleteCompact: "Poista",
+                btnBack: "← Kaikki",
+                btnBackProgress: "← Työn alla"
+            }
+        };
+
+        // متغيرات عامة
+        let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+        let currentLanguage = localStorage.getItem('language') || 'ar';
+
+        // تغيير اللغة
+        function changeLanguage(lang) {
+            currentLanguage = lang;
+            localStorage.setItem('language', lang);
+
+            // تحديث كل الأزرار
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-lang="${lang}"]`).classList.add('active');
+
+            // تحديث الاتجاه
+            const htmlElement = document.getElementById('htmlElement');
+            const dir = lang === 'ar' ? 'rtl' : 'ltr';
+            htmlElement.setAttribute('dir', dir);
+            htmlElement.setAttribute('lang', lang);
+
+            // تحديث جميع النصوص
+            updateAllTexts();
+            renderTasks();
+        }
+
+        // تحديث جميع النصوص
+        function updateAllTexts() {
+            const t = translations[currentLanguage];
+            
+            document.getElementById('backBtn').textContent = t.backBtn;
+            document.getElementById('pageTitle').textContent = t.pageTitle;
+            document.getElementById('mainTitle').textContent = t.mainTitle;
+            document.getElementById('mainSubtitle').textContent = t.mainSubtitle;
+            document.getElementById('taskInput').placeholder = t.taskInputPlaceholder;
+            document.getElementById('addBtn').textContent = t.addBtn;
+            document.getElementById('allTasksTitle').textContent = t.allTasksTitle;
+            document.getElementById('inProgressTitle').textContent = t.inProgressTitle;
+            document.getElementById('completedTitle').textContent = t.completedTitle;
+        }
+
+        // إضافة مهمة جديدة
+        function addTask() {
+            const input = document.getElementById('taskInput');
+            const taskText = input.value.trim();
+
+            if (taskText === '') {
+                alert(translations[currentLanguage].alertEmpty);
+                return;
+            }
+
+            const task = {
+                id: Date.now(),
+                text: taskText,
+                status: 'all' // all, in-progress, completed
+            };
+
+            tasks.push(task);
+            saveTasks();
+            renderTasks();
+            input.value = '';
+            input.focus();
+        }
+
+        // تحديث حالة المهمة
+        function updateTaskStatus(taskId, newStatus) {
+            const task = tasks.find(t => t.id === taskId);
+            if (task) {
+                task.status = newStatus;
+                saveTasks();
+                renderTasks();
+            }
+        }
+
+        // حذف المهمة
+        function deleteTask(taskId) {
+            if (confirm(translations[currentLanguage].confirmDelete)) {
+                tasks = tasks.filter(t => t.id !== taskId);
+                saveTasks();
+                renderTasks();
+            }
+        }
+
+        // حفظ البيانات
+        function saveTasks() {
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+        }
+
+        // عرض المهام
+        function renderTasks() {
+            const allList = document.getElementById('allTasksList');
+            const progressList = document.getElementById('progressTasksList');
+            const completedList = document.getElementById('completedTasksList');
+
+            // تفريغ القوائم
+            allList.innerHTML = '';
+            progressList.innerHTML = '';
+            completedList.innerHTML = '';
+
+            // تجميع المهام
+            const allTasks = tasks.filter(t => t.status === 'all');
+            const progressTasks = tasks.filter(t => t.status === 'in-progress');
+            const completedTasks = tasks.filter(t => t.status === 'completed');
+
+            // تحديث الأرقام
+            document.getElementById('allCount').textContent = allTasks.length;
+            document.getElementById('progressCount').textContent = progressTasks.length;
+            document.getElementById('completedCount').textContent = completedTasks.length;
+
+            // عرض المهام في كل قائمة
+            if (allTasks.length === 0) {
+                allList.innerHTML = `<div class="empty-message">${translations[currentLanguage].emptyMsg}</div>`;
+            } else {
+                allTasks.forEach(task => {
+                    allList.appendChild(createTaskElement(task));
+                });
+            }
+
+            if (progressTasks.length === 0) {
+                progressList.innerHTML = `<div class="empty-message">${translations[currentLanguage].emptyMsgProgress}</div>`;
+            } else {
+                progressTasks.forEach(task => {
+                    progressList.appendChild(createTaskElement(task, 'in-progress'));
+                });
+            }
+
+            if (completedTasks.length === 0) {
+                completedList.innerHTML = `<div class="empty-message">${translations[currentLanguage].emptyMsgCompleted}</div>`;
+            } else {
+                completedTasks.forEach(task => {
+                    completedList.appendChild(createTaskElement(task, 'completed'));
+                });
+            }
+        }
+
+        // إنشاء عنصر المهمة
+        function createTaskElement(task, type) {
+            const div = document.createElement('div');
+            div.className = `todo-item ${type === 'in-progress' ? 'in-progress-item' : ''} ${type === 'completed' ? 'completed-item' : ''}`;
+            div.draggable = true;
+            div.dataset.taskId = task.id;
+            
+            const t = translations[currentLanguage];
+            let buttons = '';
+            
+            if (type === undefined || type === 'all') {
+                buttons = `
+                    <button class="btn-small btn-progress" onclick="updateTaskStatus(${task.id}, 'in-progress')">
+                        ${t.btnStart}
+                    </button>
+                    <button class="btn-small btn-delete" onclick="deleteTask(${task.id})">
+                        ${t.btnDelete}
+                    </button>
+                `;
+            } else if (type === 'in-progress') {
+                buttons = `
+                    <button class="btn-small btn-complete" onclick="updateTaskStatus(${task.id}, 'completed')">
+                        ${t.btnComplete}
+                    </button>
+                    <button class="btn-small btn-progress" onclick="updateTaskStatus(${task.id}, 'all')">
+                        ${t.btnBack}
+                    </button>
+                    <button class="btn-small btn-delete" onclick="deleteTask(${task.id})">
+                        ${t.btnDeleteCompact}
+                    </button>
+                `;
+            } else if (type === 'completed') {
+                buttons = `
+                    <button class="btn-small btn-progress" onclick="updateTaskStatus(${task.id}, 'in-progress')">
+                        ${t.btnBackProgress}
+                    </button>
+                    <button class="btn-small btn-delete" onclick="deleteTask(${task.id})">
+                        ${t.btnDeleteCompact}
+                    </button>
+                `;
+            }
+
+            div.innerHTML = `
+                <span class="todo-text">${escapeHtml(task.text)}</span>
+                <div class="todo-buttons">
+                    ${buttons}
+                </div>
+            `;
+
+            // إضافة معالجات الـ drag and drop
+            div.addEventListener('dragstart', handleDragStart);
+            div.addEventListener('dragend', handleDragEnd);
+
+            return div;
+        }
+
+        // تجنب XSS
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, m => map[m]);
+        }
+
+        // معالجات Drag and Drop
+        let draggedTaskId = null;
+
+        function handleDragStart(e) {
+            draggedTaskId = this.dataset.taskId;
+            this.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+        }
+
+        function handleDragEnd(e) {
+            this.classList.remove('dragging');
+            document.querySelectorAll('.list-content').forEach(list => {
+                list.classList.remove('drag-over');
+            });
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+            this.classList.add('drag-over');
+        }
+
+        function handleDragLeave(e) {
+            if (e.target === this) {
+                this.classList.remove('drag-over');
+            }
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            this.classList.remove('drag-over');
+
+            if (!draggedTaskId) return;
+
+            const newStatus = this.id === 'allTasksList' ? 'all' 
+                            : this.id === 'progressTasksList' ? 'in-progress'
+                            : this.id === 'completedTasksList' ? 'completed'
+                            : 'all';
+
+            updateTaskStatus(parseInt(draggedTaskId), newStatus);
+            draggedTaskId = null;
+        }
+
+        // معالجة Enter في حقل الإدخال
+        document.getElementById('taskInput').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                addTask();
+            }
+        });
+
+        // إضافة معالجات الـ drop على القوائم
+        document.getElementById('allTasksList').addEventListener('dragover', handleDragOver);
+        document.getElementById('allTasksList').addEventListener('dragleave', handleDragLeave);
+        document.getElementById('allTasksList').addEventListener('drop', handleDrop);
+
+        document.getElementById('progressTasksList').addEventListener('dragover', handleDragOver);
+        document.getElementById('progressTasksList').addEventListener('dragleave', handleDragLeave);
+        document.getElementById('progressTasksList').addEventListener('drop', handleDrop);
+
+        document.getElementById('completedTasksList').addEventListener('dragover', handleDragOver);
+        document.getElementById('completedTasksList').addEventListener('dragleave', handleDragLeave);
+        document.getElementById('completedTasksList').addEventListener('drop', handleDrop);
+
+        // تحميل البيانات عند فتح الصفحة
+        changeLanguage(currentLanguage);
+    </script>
+</body>
+</html>

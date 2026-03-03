@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="htmlElement">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">الصفحة الرئيسية</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            direction: rtl;
+        }
+
+        .language-selector {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .lang-btn {
+            padding: 8px 15px;
+            border: 2px solid white;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .lang-btn.active {
+            background: white;
+            color: #667eea;
+        }
+
+        .lang-btn:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+            padding-top: 50px;
+        }
+
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .app-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .app-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .app-header {
+            padding: 30px 20px;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .budget-card .app-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .todo-card .app-header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .app-icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        .app-content {
+            padding: 30px 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .app-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .app-description {
+            color: #666;
+            font-size: 0.95em;
+            margin-bottom: 20px;
+            flex: 1;
+        }
+
+        .app-features {
+            list-style: none;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+        }
+
+        .app-features li {
+            padding: 8px 0;
+            color: #555;
+            padding-right: 25px;
+            position: relative;
+        }
+
+        .app-features li:before {
+            content: "✓";
+            position: absolute;
+            right: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .app-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            display: block;
+            width: 100%;
+        }
+
+        .todo-card .app-button {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .app-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .full-width-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin-bottom: 40px;
+        }
+
+        .full-width-card h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .full-width-card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            padding: 30px;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            header {
+                padding-top: 80px;
+            }
+
+            .language-selector {
+                right: auto;
+                left: 20px;
+            }
+
+            .apps-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .full-width-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="language-selector">
+        <button class="lang-btn active" data-lang="ar" onclick="changeLanguage('ar')">العربية</button>
+        <button class="lang-btn" data-lang="en" onclick="changeLanguage('en')">English</button>
+        <button class="lang-btn" data-lang="fi" onclick="changeLanguage('fi')">Suomi</button>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1 id="mainTitle">🎯 تطبيقاتي</h1>
+            <p id="mainSubtitle">اختر التطبيق الذي تريد استخدامه</p>
+        </header>
+
+        <div class="apps-grid">
+            <!-- Budget App -->
+            <a href="index.html" class="app-card budget-card" id="budgetCard">
+                <div class="app-header">
+                    <div class="app-icon">💰</div>
+                    <span id="budgetTitle">ميزانيتي</span>
+                </div>
+                <div class="app-content">
+                    <div class="app-title" id="budgetName">Budget Shopping Dashboard</div>
+                    <p class="app-description" id="budgetDesc">
+                        إدارة التسوق والنفقات والميزانية بسهولة وكفاءة
+                    </p>
+                    <ul class="app-features">
+                        <li id="budgetFeature1">متابعة المشتريات</li>
+                        <li id="budgetFeature2">إدارة الميزانية</li>
+                        <li id="budgetFeature3">تحليل النفقات</li>
+                        <li id="budgetFeature4">حفظ تلقائي</li>
+                    </ul>
+                    <button class="app-button" id="budgetBtn">اذهب للتطبيق →</button>
+                </div>
+            </a>
+
+            <!-- Todo App -->
+            <a href="todo.html" class="app-card todo-card" id="todoCard">
+                <div class="app-header">
+                    <div class="app-icon">📝</div>
+                    <span id="todoTitle">قائمة مهامي</span>
+                </div>
+                <div class="app-content">
+                    <div class="app-title" id="todoName">Todo List</div>
+                    <p class="app-description" id="todoDesc">
+                        إدارة مهامك اليومية وتنظيمها بثلاث حالات
+                    </p>
+                    <ul class="app-features">
+                        <li id="todoFeature1">جميع المهام</li>
+                        <li id="todoFeature2">المهام الجارية</li>
+                        <li id="todoFeature3">المهام المنتهية</li>
+                        <li id="todoFeature4">سحب وإفلات</li>
+                    </ul>
+                    <button class="app-button" id="todoBtn">اذهب للتطبيق →</button>
+                </div>
+            </a>
+        </div>
+
+        <div class="full-width-card">
+            <h2 id="aboutTitle">ℹ️ حول التطبيقات</h2>
+            <p id="aboutText1">
+                مرحباً بك في مركز التطبيقات الخاص بك! هنا تجد جميع الأدوات التي تحتاجها لإدارة حياتك بشكل أفضل.
+            </p>
+            <p id="aboutText2">
+                جميع البيانات تُحفظ تلقائياً في متصفحك (localStorage) لذا لا تقلق على فقدان المعلومات.
+            </p>
+            <p id="aboutText3">
+                التطبيقات تدعم ثلاث لغات: العربية والإنجليزية والفنلندية. اختر لغتك المفضلة وابدأ الآن!
+            </p>
+        </div>
+
+        <footer>
+            <p id="footerText">© 2026 جميع الحقوق محفوظة | تم الإنشاء بـ ❤️</p>
+        </footer>
+    </div>
+
+    <script>
+        const translations = {
+            ar: {
+                pageTitle: "الصفحة الرئيسية",
+                mainTitle: "🎯 تطبيقاتي",
+                mainSubtitle: "اختر التطبيق الذي تريد استخدامه",
+                
+                budgetTitle: "ميزانيتي",
+                budgetName: "Budget Shopping Dashboard",
+                budgetDesc: "إدارة التسوق والنفقات والميزانية بسهولة وكفاءة",
+                budgetFeature1: "متابعة المشتريات",
+                budgetFeature2: "إدارة الميزانية",
+                budgetFeature3: "تحليل النفقات",
+                budgetFeature4: "حفظ تلقائي",
+                budgetBtn: "اذهب للتطبيق →",
+                
+                todoTitle: "قائمة مهامي",
+                todoName: "Todo List",
+                todoDesc: "إدارة مهامك اليومية وتنظيمها بثلاث حالات",
+                todoFeature1: "جميع المهام",
+                todoFeature2: "المهام الجارية",
+                todoFeature3: "المهام المنتهية",
+                todoFeature4: "سحب وإفلات",
+                todoBtn: "اذهب للتطبيق →",
+                
+                aboutTitle: "ℹ️ حول التطبيقات",
+                aboutText1: "مرحباً بك في مركز التطبيقات الخاص بك! هنا تجد جميع الأدوات التي تحتاجها لإدارة حياتك بشكل أفضل.",
+                aboutText2: "جميع البيانات تُحفظ تلقائياً في متصفحك (localStorage) لذا لا تقلق على فقدان المعلومات.",
+                aboutText3: "التطبيقات تدعم ثلاث لغات: العربية والإنجليزية والفنلندية. اختر لغتك المفضلة وابدأ الآن!",
+                footerText: "© 2026 جميع الحقوق محفوظة | تم الإنشاء بـ ❤️"
+            },
+            en: {
+                pageTitle: "Home",
+                mainTitle: "🎯 My Apps",
+                mainSubtitle: "Choose the app you want to use",
+                
+                budgetTitle: "My Budget",
+                budgetName: "Budget Shopping Dashboard",
+                budgetDesc: "Manage shopping, expenses, and budget easily and efficiently",
+                budgetFeature1: "Track purchases",
+                budgetFeature2: "Budget management",
+                budgetFeature3: "Expense analysis",
+                budgetFeature4: "Auto save",
+                budgetBtn: "Go to App →",
+                
+                todoTitle: "My Tasks",
+                todoName: "Todo List",
+                todoDesc: "Manage and organize your daily tasks in three categories",
+                todoFeature1: "All tasks",
+                todoFeature2: "In progress",
+                todoFeature3: "Completed",
+                todoFeature4: "Drag and drop",
+                todoBtn: "Go to App →",
+                
+                aboutTitle: "ℹ️ About Apps",
+                aboutText1: "Welcome to your personal app center! Here you'll find all the tools you need to manage your life better.",
+                aboutText2: "All data is automatically saved in your browser (localStorage) so you don't have to worry about losing information.",
+                aboutText3: "The apps support three languages: Arabic, English, and Finnish. Choose your favorite language and get started now!",
+                footerText: "© 2026 All rights reserved | Created with ❤️"
+            },
+            fi: {
+                pageTitle: "Etusivu",
+                mainTitle: "🎯 Omat Sovellukset",
+                mainSubtitle: "Valitse sovellus jonka haluat käyttää",
+                
+                budgetTitle: "Budjetini",
+                budgetName: "Budget Shopping Dashboard",
+                budgetDesc: "Hallitse ostoksia, kuluja ja budjettia helposti ja tehokkaasti",
+                budgetFeature1: "Seurata ostoksia",
+                budgetFeature2: "Budjetin hallinta",
+                budgetFeature3: "Kulujen analyysi",
+                budgetFeature4: "Automaattinen tallennus",
+                budgetBtn: "Siirry sovellukseen →",
+                
+                todoTitle: "Omat Tehtävät",
+                todoName: "Todo List",
+                todoDesc: "Hallitse ja organisoi päivittäisiä tehtäviäsi kolmeen kategoriaan",
+                todoFeature1: "Kaikki tehtävät",
+                todoFeature2: "Työn alla",
+                todoFeature3: "Valmistuneet",
+                todoFeature4: "Vedä ja pudota",
+                todoBtn: "Siirry sovellukseen →",
+                
+                aboutTitle: "ℹ️ Tietoa sovelluksista",
+                aboutText1: "Tervetuloa henkilökohtaiseen sovelluspalveluun! Täällä löydät kaikki työkalut jotka tarvitset elämäsi hallintaan.",
+                aboutText2: "Kaikki tiedot tallennetaan automaattisesti selaimeen (localStorage) joten et tarvitse pelätä tietojen menetystä.",
+                aboutText3: "Sovellukset tukevat kolmea kieltä: arabia, englanti ja suomi. Valitse suosikki kielesi ja aloita nyt!",
+                footerText: "© 2026 Kaikki oikeudet pidätetään | Luotu rakkaudella ❤️"
+            }
+        };
+
+        let currentLanguage = localStorage.getItem('homeLanguage') || 'ar';
+
+        function changeLanguage(lang) {
+            currentLanguage = lang;
+            localStorage.setItem('homeLanguage', lang);
+
+            // Update language buttons
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-lang="${lang}"]`).classList.add('active');
+
+            // Update direction
+            const htmlElement = document.getElementById('htmlElement');
+            const dir = lang === 'ar' ? 'rtl' : 'ltr';
+            htmlElement.setAttribute('dir', dir);
+            htmlElement.setAttribute('lang', lang);
+
+            // Update all texts
+            updateAllTexts();
+        }
+
+        function updateAllTexts() {
+            const t = translations[currentLanguage];
+            
+            document.getElementById('pageTitle').textContent = t.pageTitle;
+            document.getElementById('mainTitle').textContent = t.mainTitle;
+            document.getElementById('mainSubtitle').textContent = t.mainSubtitle;
+            
+            document.getElementById('budgetTitle').textContent = t.budgetTitle;
+            document.getElementById('budgetName').textContent = t.budgetName;
+            document.getElementById('budgetDesc').textContent = t.budgetDesc;
+            document.getElementById('budgetFeature1').textContent = t.budgetFeature1;
+            document.getElementById('budgetFeature2').textContent = t.budgetFeature2;
+            document.getElementById('budgetFeature3').textContent = t.budgetFeature3;
+            document.getElementById('budgetFeature4').textContent = t.budgetFeature4;
+            document.getElementById('budgetBtn').textContent = t.budgetBtn;
+            
+            document.getElementById('todoTitle').textContent = t.todoTitle;
+            document.getElementById('todoName').textContent = t.todoName;
+            document.getElementById('todoDesc').textContent = t.todoDesc;
+            document.getElementById('todoFeature1').textContent = t.todoFeature1;
+            document.getElementById('todoFeature2').textContent = t.todoFeature2;
+            document.getElementById('todoFeature3').textContent = t.todoFeature3;
+            document.getElementById('todoFeature4').textContent = t.todoFeature4;
+            document.getElementById('todoBtn').textContent = t.todoBtn;
+            
+            document.getElementById('aboutTitle').textContent = t.aboutTitle;
+            document.getElementById('aboutText1').textContent = t.aboutText1;
+            document.getElementById('aboutText2').textContent = t.aboutText2;
+            document.getElementById('aboutText3').textContent = t.aboutText3;
+            document.getElementById('footerText').textContent = t.footerText;
+        }
+
+        // Initialize on page load
+        changeLanguage(currentLanguage);
+    </script>
+</body>
+</html>

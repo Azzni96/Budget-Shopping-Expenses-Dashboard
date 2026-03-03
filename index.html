@@ -112,6 +112,10 @@
             background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
         }
 
+        .medicine-card .app-header {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+
         .app-icon {
             font-size: 3em;
             margin-bottom: 10px;
@@ -159,6 +163,14 @@
             font-weight: bold;
         }
 
+        .medicine-card .app-features li:before {
+            color: #10b981;
+        }
+
+        .todo-card .app-features li:before {
+            color: #f5576c;
+        }
+
         .app-button {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -176,6 +188,10 @@
 
         .todo-card .app-button {
             background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .medicine-card .app-button {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
         }
 
         .app-button:hover {
@@ -290,6 +306,27 @@
                     <button class="app-button" id="todoBtn">اذهب للتطبيق →</button>
                 </div>
             </a>
+
+            <!-- Medicine App -->
+            <a href="medicines.html" class="app-card medicine-card" id="medicineCard">
+                <div class="app-header">
+                    <div class="app-icon">💊</div>
+                    <span id="medicineTitle">أدويتي</span>
+                </div>
+                <div class="app-content">
+                    <div class="app-title" id="medicineName">Medicines Tracker</div>
+                    <p class="app-description" id="medicineDesc">
+                        تتبع الأدوية والعلاجات التي تأخذها يومياً
+                    </p>
+                    <ul class="app-features">
+                        <li id="medicineFeature1">إضافة الأدوية</li>
+                        <li id="medicineFeature2">تتبع الجرعات</li>
+                        <li id="medicineFeature3">تعديد المرات</li>
+                        <li id="medicineFeature4">حفظ آمن</li>
+                    </ul>
+                    <button class="app-button" id="medicineBtn">اذهب للتطبيق →</button>
+                </div>
+            </a>
         </div>
 
         <div class="full-width-card">
@@ -335,6 +372,15 @@
                 todoFeature4: "سحب وإفلات",
                 todoBtn: "اذهب للتطبيق →",
                 
+                medicineTitle: "أدويتي",
+                medicineName: "Medicines Tracker",
+                medicineDesc: "تتبع الأدوية والعلاجات التي تأخذها يومياً",
+                medicineFeature1: "إضافة الأدوية",
+                medicineFeature2: "تتبع الجرعات",
+                medicineFeature3: "تعديد المرات",
+                medicineFeature4: "حفظ آمن",
+                medicineBtn: "اذهب للتطبيق →",
+                
                 aboutTitle: "ℹ️ حول التطبيقات",
                 aboutText1: "مرحباً بك في مركز التطبيقات الخاص بك! هنا تجد جميع الأدوات التي تحتاجها لإدارة حياتك بشكل أفضل.",
                 aboutText2: "جميع البيانات تُحفظ تلقائياً في متصفحك (localStorage) لذا لا تقلق على فقدان المعلومات.",
@@ -364,6 +410,15 @@
                 todoFeature4: "Drag and drop",
                 todoBtn: "Go to App →",
                 
+                medicineTitle: "My Medicines",
+                medicineName: "Medicines Tracker",
+                medicineDesc: "Track the medicines and treatments you take daily",
+                medicineFeature1: "Add medicines",
+                medicineFeature2: "Track doses",
+                medicineFeature3: "Set frequency",
+                medicineFeature4: "Secure storage",
+                medicineBtn: "Go to App →",
+                
                 aboutTitle: "ℹ️ About Apps",
                 aboutText1: "Welcome to your personal app center! Here you'll find all the tools you need to manage your life better.",
                 aboutText2: "All data is automatically saved in your browser (localStorage) so you don't have to worry about losing information.",
@@ -392,6 +447,15 @@
                 todoFeature3: "Valmistuneet",
                 todoFeature4: "Vedä ja pudota",
                 todoBtn: "Siirry sovellukseen →",
+                
+                medicineTitle: "Omat Lääkkeet",
+                medicineName: "Medicines Tracker",
+                medicineDesc: "Seuraa ottamiasi lääkkeitä ja hoitoja päivittäin",
+                medicineFeature1: "Lisää lääkkeitä",
+                medicineFeature2: "Seuraa annoksia",
+                medicineFeature3: "Aseta tiheys",
+                medicineFeature4: "Turvallinen säilytys",
+                medicineBtn: "Siirry sovellukseen →",
                 
                 aboutTitle: "ℹ️ Tietoa sovelluksista",
                 aboutText1: "Tervetuloa henkilökohtaiseen sovelluspalveluun! Täällä löydät kaikki työkalut jotka tarvitset elämäsi hallintaan.",
@@ -447,6 +511,15 @@
             document.getElementById('todoFeature3').textContent = t.todoFeature3;
             document.getElementById('todoFeature4').textContent = t.todoFeature4;
             document.getElementById('todoBtn').textContent = t.todoBtn;
+            
+            document.getElementById('medicineTitle').textContent = t.medicineTitle;
+            document.getElementById('medicineName').textContent = t.medicineName;
+            document.getElementById('medicineDesc').textContent = t.medicineDesc;
+            document.getElementById('medicineFeature1').textContent = t.medicineFeature1;
+            document.getElementById('medicineFeature2').textContent = t.medicineFeature2;
+            document.getElementById('medicineFeature3').textContent = t.medicineFeature3;
+            document.getElementById('medicineFeature4').textContent = t.medicineFeature4;
+            document.getElementById('medicineBtn').textContent = t.medicineBtn;
             
             document.getElementById('aboutTitle').textContent = t.aboutTitle;
             document.getElementById('aboutText1').textContent = t.aboutText1;

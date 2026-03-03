@@ -279,22 +279,145 @@
         }
 
         @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
             .lists-container {
                 grid-template-columns: 1fr;
             }
 
+            header {
+                margin-bottom: 20px;
+            }
+
             header h1 {
-                font-size: 1.8em;
+                font-size: 1.5em;
             }
 
             .input-section {
                 flex-direction: column;
+                padding: 15px;
+                gap: 8px;
+                margin-bottom: 20px;
+            }
+
+            .input-section input {
+                padding: 10px 12px;
+                font-size: 16px;
+            }
+
+            .input-section button {
+                padding: 10px 20px;
+                width: 100%;
+            }
+
+            .list-section {
+                border-radius: 8px;
+            }
+
+            .list-content {
+                padding: 10px;
+                min-height: 200px;
+            }
+
+            .list-header {
+                padding: 15px;
+                font-size: 1.1em;
+            }
+
+            .todo-item {
+                padding: 10px 12px;
+                margin-bottom: 8px;
+                gap: 8px;
+            }
+
+            .todo-buttons {
+                gap: 3px;
+            }
+
+            .btn-small {
+                padding: 4px 8px;
+                font-size: 0.75em;
+            }
+
+            .todo-item input[type="checkbox"] {
+                width: 18px;
+                height: 18px;
+            }
+
+            .empty-message {
+                padding: 20px;
+                font-size: 0.9em;
             }
 
             .language-selector {
                 position: static;
                 justify-content: center;
-                margin-bottom: 20px;
+                margin-bottom: 15px;
+                flex-wrap: wrap;
+            }
+
+            .back-button {
+                padding: 6px 12px;
+                font-size: 0.85em;
+            }
+
+            .lang-btn {
+                padding: 6px 12px;
+                font-size: 0.85em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 5px;
+            }
+
+            header h1 {
+                font-size: 1.2em;
+                margin-bottom: 8px;
+            }
+
+            .input-section {
+                padding: 10px;
+                margin-bottom: 15px;
+            }
+
+            .input-section input {
+                padding: 8px 10px;
+                font-size: 14px;
+                margin-bottom: 5px;
+            }
+
+            .list-header {
+                padding: 12px;
+                font-size: 1em;
+            }
+
+            .list-header .badge {
+                font-size: 0.7em;
+                padding: 3px 8px;
+            }
+
+            .todo-item {
+                padding: 8px 10px;
+                margin-bottom: 6px;
+            }
+
+            .btn-small {
+                padding: 3px 6px;
+                font-size: 0.7em;
+            }
+
+            .language-selector {
+                gap: 5px;
+            }
+
+            .back-button,
+            .lang-btn {
+                padding: 5px 10px;
+                font-size: 0.8em;
             }
         }
     </style>

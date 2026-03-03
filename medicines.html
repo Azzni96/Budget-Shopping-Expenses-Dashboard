@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="htmlElement">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">الأدوية</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            direction: rtl;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .top-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .back-button {
+            padding: 8px 15px;
+            border: 2px solid white;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .language-selector {
+            display: flex;
+            gap: 10px;
+        }
+
+        .lang-btn {
+            padding: 8px 15px;
+            border: 2px solid white;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .lang-btn.active {
+            background: white;
+            color: #667eea;
+        }
+
+        .lang-btn:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            padding-top: 20px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+
+        .input-section {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr auto;
+            gap: 10px;
+            align-items: end;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .input-group label {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 0.9em;
+        }
+
+        .input-section input {
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        .input-section input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .input-section button {
+            padding: 12px 25px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-weight: bold;
+        }
+
+        .input-section button:hover {
+            background: #764ba2;
+        }
+
+        .medicine-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+        }
+
+        .medicine-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid #667eea;
+        }
+
+        .medicine-card.completed {
+            opacity: 0.7;
+            border-left-color: #10b981;
+        }
+
+        .medicine-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .medicine-name {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .medicine-dose {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        .medicine-delete-btn {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: background 0.3s;
+        }
+
+        .medicine-delete-btn:hover {
+            background: #dc2626;
+        }
+
+        .intake-times {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .intake-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 5px;
+        }
+
+        .intake-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .intake-item.checked {
+            background: #e8f5e9;
+        }
+
+        .intake-time {
+            font-weight: bold;
+            color: #667eea;
+            min-width: 100px;
+        }
+
+        .intake-status {
+            flex: 1;
+            text-align: end;
+        }
+
+        .status-taken {
+            color: #10b981;
+            font-weight: bold;
+        }
+
+        .status-pending {
+            color: #f59e0b;
+            font-weight: bold;
+        }
+
+        .empty-message {
+            text-align: center;
+            padding: 60px 20px;
+            color: white;
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                max-width: 100%;
+            }
+
+            .top-controls {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+                margin-bottom: 25px;
+            }
+
+            .back-button {
+                text-align: center;
+                padding: 10px 15px;
+                font-size: 0.9em;
+            }
+
+            .language-selector {
+                justify-content: center;
+                gap: 8px;
+            }
+
+            .lang-btn {
+                padding: 6px 12px;
+                font-size: 0.85em;
+            }
+
+            header {
+                margin-bottom: 25px;
+                padding-top: 10px;
+            }
+
+            header h1 {
+                font-size: 1.5em;
+                margin-bottom: 8px;
+            }
+
+            header p {
+                font-size: 0.95em;
+            }
+
+            .input-section {
+                grid-template-columns: 1fr;
+                padding: 15px;
+                gap: 8px;
+                margin-bottom: 20px;
+            }
+
+            .input-group {
+                gap: 3px;
+            }
+
+            .input-group label {
+                font-size: 0.85em;
+            }
+
+            .input-section input {
+                padding: 10px 12px;
+                font-size: 16px;
+            }
+
+            .input-section button {
+                padding: 10px 15px;
+                font-size: 0.9em;
+                width: 100%;
+            }
+
+            .medicine-list {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .medicine-card {
+                padding: 15px;
+            }
+
+            .medicine-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .medicine-delete-btn {
+                width: 100%;
+                padding: 8px 12px;
+            }
+
+            .medicine-name {
+                font-size: 1.1em;
+            }
+
+            .medicine-dose {
+                font-size: 0.85em;
+            }
+
+            .intake-item {
+                padding: 8px;
+                gap: 8px;
+            }
+
+            .intake-item input[type="checkbox"] {
+                width: 18px;
+                height: 18px;
+                flex-shrink: 0;
+            }
+
+            .intake-time {
+                min-width: 80px;
+                font-size: 0.9em;
+            }
+
+            .intake-status {
+                font-size: 0.85em;
+            }
+
+            .empty-message {
+                padding: 30px 15px;
+                font-size: 1em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 5px;
+            }
+
+            .top-controls {
+                margin-bottom: 20px;
+                gap: 8px;
+            }
+
+            .back-button,
+            .lang-btn {
+                padding: 6px 10px;
+                font-size: 0.8em;
+            }
+
+            header {
+                margin-bottom: 20px;
+                padding-top: 5px;
+            }
+
+            header h1 {
+                font-size: 1.2em;
+                margin-bottom: 5px;
+            }
+
+            header p {
+                font-size: 0.85em;
+            }
+
+            .input-section {
+                padding: 10px;
+                gap: 6px;
+                margin-bottom: 15px;
+            }
+
+            .input-group label {
+                font-size: 0.8em;
+            }
+
+            .input-section input {
+                padding: 8px 10px;
+                font-size: 14px;
+                margin-bottom: 3px;
+            }
+
+            .input-section button {
+                padding: 10px 12px;
+                font-size: 0.85em;
+                width: 100%;
+            }
+
+            .medicine-list {
+                gap: 10px;
+            }
+
+            .medicine-card {
+                padding: 12px;
+                border-left-width: 3px;
+            }
+
+            .medicine-name {
+                font-size: 1em;
+            }
+
+            .medicine-dose {
+                font-size: 0.8em;
+            }
+
+            .medicine-delete-btn {
+                padding: 6px 10px;
+                font-size: 0.8em;
+            }
+
+            .intake-times {
+                gap: 8px;
+            }
+
+            .intake-item {
+                padding: 6px;
+                gap: 6px;
+                flex-wrap: wrap;
+            }
+
+            .intake-item input[type="checkbox"] {
+                width: 16px;
+                height: 16px;
+            }
+
+            .intake-time {
+                min-width: 70px;
+                font-size: 0.85em;
+            }
+
+            .intake-status {
+                font-size: 0.8em;
+                flex-basis: 100%;
+            }
+
+            .empty-message {
+                padding: 20px 10px;
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="top-controls">
+            <a href="index.html" class="back-button" id="backBtn">← الرجوع للصفحة الرئيسية</a>
+            <div class="language-selector">
+                <button class="lang-btn active" data-lang="ar" onclick="changeLanguage('ar')">العربية</button>
+                <button class="lang-btn" data-lang="en" onclick="changeLanguage('en')">English</button>
+                <button class="lang-btn" data-lang="fi" onclick="changeLanguage('fi')">Suomi</button>
+            </div>
+        </div>
+
+        <header>
+            <h1 id="mainTitle">💊 أدويتي</h1>
+            <p id="mainSubtitle">تتبع الأدوية والعلاجات التي تأخذها</p>
+        </header>
+
+        <div class="input-section">
+            <div class="input-group">
+                <label id="labelMedicineName">اسم الدواء</label>
+                <input type="text" id="medicineName" placeholder="مثال: أسبرين" autocomplete="off">
+            </div>
+            <div class="input-group">
+                <label id="labelDose">الجرعة</label>
+                <input type="text" id="medicineDose" placeholder="مثال: 500mg">
+            </div>
+            <div class="input-group">
+                <label id="labelTimes">عدد المرات</label>
+                <input type="number" id="medicineTimes" min="1" max="10" value="1">
+            </div>
+            <button onclick="addMedicine()" id="addBtn">إضافة</button>
+        </div>
+
+        <div class="medicine-list" id="medicineList">
+            <div class="empty-message" id="emptyMsg">لا توجد أدوية حالياً</div>
+        </div>
+    </div>
+
+    <script>
+        const translations = {
+            ar: {
+                backBtn: "← الرجوع للصفحة الرئيسية",
+                pageTitle: "الأدوية",
+                mainTitle: "💊 أدويتي",
+                mainSubtitle: "تتبع الأدوية والعلاجات التي تأخذها",
+                labelMedicineName: "اسم الدواء",
+                labelDose: "الجرعة",
+                labelTimes: "عدد المرات",
+                addBtn: "إضافة",
+                emptyMsg: "لا توجد أدوية حالياً",
+                time: "الوقت",
+                taken: "✓ تم أخذه",
+                pending: "⏳ متوقع",
+                delete: "🗑️ حذف",
+                confirmDelete: "هل أنت متأكد من حذف هذا الدواء؟",
+                morning: "الصباح",
+                noon: "الظهيرة",
+                evening: "المساء",
+                night: "الليل",
+                time1: "المرة 1",
+                time2: "المرة 2",
+                time3: "المرة 3",
+                time4: "المرة 4"
+            },
+            en: {
+                backBtn: "← Back to Home",
+                pageTitle: "Medicines",
+                mainTitle: "💊 My Medicines",
+                mainSubtitle: "Track the medicines and treatments you take",
+                labelMedicineName: "Medicine Name",
+                labelDose: "Dose",
+                labelTimes: "Times per Day",
+                addBtn: "Add",
+                emptyMsg: "No medicines added yet",
+                time: "Time",
+                taken: "✓ Taken",
+                pending: "⏳ Pending",
+                delete: "🗑️ Delete",
+                confirmDelete: "Are you sure you want to delete this medicine?",
+                morning: "Morning",
+                noon: "Noon",
+                evening: "Evening",
+                night: "Night",
+                time1: "Time 1",
+                time2: "Time 2",
+                time3: "Time 3",
+                time4: "Time 4"
+            },
+            fi: {
+                backBtn: "← Takaisin Etusivulle",
+                pageTitle: "Lääkkeet",
+                mainTitle: "💊 Omat Lääkkeet",
+                mainSubtitle: "Seuraa ottamiasi lääkkeitä ja hoitoja",
+                labelMedicineName: "Lääkkeen Nimi",
+                labelDose: "Annos",
+                labelTimes: "Kerrat Päivässä",
+                addBtn: "Lisää",
+                emptyMsg: "Ei lääkkeitä vielä",
+                time: "Aika",
+                taken: "✓ Otettu",
+                pending: "⏳ Odottava",
+                delete: "🗑️ Poista",
+                confirmDelete: "Oletko varma, että haluat poistaa tämän lääkkeen?",
+                morning: "Aamu",
+                noon: "Päivä",
+                evening: "Ilta",
+                night: "Yö",
+                time1: "Aika 1",
+                time2: "Aika 2",
+                time3: "Aika 3",
+                time4: "Aika 4"
+            }
+        };
+
+        let medicines = JSON.parse(localStorage.getItem('medicines')) || [];
+        let currentLanguage = localStorage.getItem('medicineLanguage') || 'ar';
+
+        const timeLabels = {
+            ar: ['الصباح', 'الظهيرة', 'المساء', 'الليل'],
+            en: ['Morning', 'Noon', 'Evening', 'Night'],
+            fi: ['Aamu', 'Päivä', 'Ilta', 'Yö']
+        };
+
+        const timeLabelsFallback = {
+            ar: ['المرة 1', 'المرة 2', 'المرة 3', 'المرة 4'],
+            en: ['Time 1', 'Time 2', 'Time 3', 'Time 4'],
+            fi: ['Aika 1', 'Aika 2', 'Aika 3', 'Aika 4']
+        };
+
+        function changeLanguage(lang) {
+            currentLanguage = lang;
+            localStorage.setItem('medicineLanguage', lang);
+
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-lang="${lang}"]`).classList.add('active');
+
+            const htmlElement = document.getElementById('htmlElement');
+            const dir = lang === 'ar' ? 'rtl' : 'ltr';
+            htmlElement.setAttribute('dir', dir);
+            htmlElement.setAttribute('lang', lang);
+
+            updateAllTexts();
+            renderMedicines();
+        }
+
+        function updateAllTexts() {
+            const t = translations[currentLanguage];
+            
+            document.getElementById('pageTitle').textContent = t.pageTitle;
+            document.getElementById('backBtn').textContent = t.backBtn;
+            document.getElementById('mainTitle').textContent = t.mainTitle;
+            document.getElementById('mainSubtitle').textContent = t.mainSubtitle;
+            document.getElementById('labelMedicineName').textContent = t.labelMedicineName;
+            document.getElementById('labelDose').textContent = t.labelDose;
+            document.getElementById('labelTimes').textContent = t.labelTimes;
+            document.getElementById('addBtn').textContent = t.addBtn;
+            document.getElementById('emptyMsg').textContent = t.emptyMsg;
+        }
+
+        function addMedicine() {
+            const name = document.getElementById('medicineName').value.trim();
+            const dose = document.getElementById('medicineDose').value.trim();
+            const times = parseInt(document.getElementById('medicineTimes').value) || 1;
+
+            if (!name) {
+                alert(translations[currentLanguage].emptyMsg);
+                return;
+            }
+
+            const medicine = {
+                id: Date.now(),
+                name: name,
+                dose: dose,
+                times: Math.min(times, 4),
+                intakes: Array(Math.min(times, 4)).fill(false)
+            };
+
+            medicines.push(medicine);
+            saveMedicines();
+            renderMedicines();
+
+            document.getElementById('medicineName').value = '';
+            document.getElementById('medicineDose').value = '';
+            document.getElementById('medicineTimes').value = '1';
+            document.getElementById('medicineName').focus();
+        }
+
+        function toggleIntake(medicineId, intakeIndex) {
+            const medicine = medicines.find(m => m.id === medicineId);
+            if (medicine) {
+                medicine.intakes[intakeIndex] = !medicine.intakes[intakeIndex];
+                saveMedicines();
+                renderMedicines();
+            }
+        }
+
+        function deleteMedicine(medicineId) {
+            if (confirm(translations[currentLanguage].confirmDelete)) {
+                medicines = medicines.filter(m => m.id !== medicineId);
+                saveMedicines();
+                renderMedicines();
+            }
+        }
+
+        function saveMedicines() {
+            localStorage.setItem('medicines', JSON.stringify(medicines));
+        }
+
+        function renderMedicines() {
+            const listContainer = document.getElementById('medicineList');
+            listContainer.innerHTML = '';
+
+            if (medicines.length === 0) {
+                listContainer.innerHTML = `<div class="empty-message">${translations[currentLanguage].emptyMsg}</div>`;
+                return;
+            }
+
+            medicines.forEach(medicine => {
+                const card = document.createElement('div');
+                const allTaken = medicine.intakes.every(intake => intake);
+                card.className = `medicine-card ${allTaken ? 'completed' : ''}`;
+                
+                const t = translations[currentLanguage];
+                let intakesHtml = '';
+
+                medicine.intakes.forEach((taken, index) => {
+                    const timeLabel = index < timeLabels[currentLanguage].length 
+                        ? timeLabels[currentLanguage][index]
+                        : timeLabelsFallback[currentLanguage][index];
+                    
+                    intakesHtml += `
+                        <div class="intake-item ${taken ? 'checked' : ''}">
+                            <input 
+                                type="checkbox" 
+                                ${taken ? 'checked' : ''} 
+                                onchange="toggleIntake(${medicine.id}, ${index})"
+                            >
+                            <span class="intake-time">${timeLabel}</span>
+                            <span class="intake-status ${taken ? 'status-taken' : 'status-pending'}">
+                                ${taken ? t.taken : t.pending}
+                            </span>
+                        </div>
+                    `;
+                });
+
+                card.innerHTML = `
+                    <div class="medicine-header">
+                        <div>
+                            <div class="medicine-name">${escapeHtml(medicine.name)}</div>
+                            <div class="medicine-dose">${medicine.dose ? escapeHtml(medicine.dose) : ''}</div>
+                        </div>
+                        <button class="medicine-delete-btn" onclick="deleteMedicine(${medicine.id})">
+                            ${t.delete}
+                        </button>
+                    </div>
+                    <div class="intake-times">
+                        ${intakesHtml}
+                    </div>
+                `;
+
+                listContainer.appendChild(card);
+            });
+        }
+
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, m => map[m]);
+        }
+
+        // Enter key support
+        document.getElementById('medicineName').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') addMedicine();
+        });
+
+        document.getElementById('medicineDose').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') addMedicine();
+        });
+
+        // Initialize
+        changeLanguage(currentLanguage);
+    </script>
+</body>
+</html>

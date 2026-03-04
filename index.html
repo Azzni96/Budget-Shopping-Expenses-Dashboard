@@ -116,6 +116,18 @@
             background: linear-gradient(135deg, #10b981 0%, #059669 100%);
         }
 
+        .bmi-card .app-header {
+            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+        }
+
+        .bmi-card .app-features li:before {
+            color: #f97316;
+        }
+
+        .bmi-card .app-button {
+            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+        }
+
         .app-icon {
             font-size: 3em;
             margin-bottom: 10px;
@@ -327,6 +339,27 @@
                     <button class="app-button" id="medicineBtn">اذهب للتطبيق →</button>
                 </div>
             </a>
+
+            <!-- BMI App -->
+            <a href="bmi.html" class="app-card bmi-card" id="bmiCard">
+                <div class="app-header">
+                    <div class="app-icon">📊</div>
+                    <span id="bmiTitle">مؤشري</span>
+                </div>
+                <div class="app-content">
+                    <div class="app-title" id="bmiName">BMI Calculator</div>
+                    <p class="app-description" id="bmiDesc">
+                        احسب مؤشر كتلة جسمك والتحكم في وزنك
+                    </p>
+                    <ul class="app-features">
+                        <li id="bmiFeature1">حساب دقيق</li>
+                        <li id="bmiFeature2">وحدات متعددة</li>
+                        <li id="bmiFeature3">تصنيفات واضحة</li>
+                        <li id="bmiFeature4">سهل الاستخدام</li>
+                    </ul>
+                    <button class="app-button" id="bmiBtn">اذهب للتطبيق →</button>
+                </div>
+            </a>
         </div>
 
         <div class="full-width-card">
@@ -381,6 +414,15 @@
                 medicineFeature4: "حفظ آمن",
                 medicineBtn: "اذهب للتطبيق →",
                 
+                bmiTitle: "مؤشري",
+                bmiName: "BMI Calculator",
+                bmiDesc: "احسب مؤشر كتلة جسمك والتحكم في وزنك",
+                bmiFeature1: "حساب دقيق",
+                bmiFeature2: "وحدات متعددة",
+                bmiFeature3: "تصنيفات واضحة",
+                bmiFeature4: "سهل الاستخدام",
+                bmiBtn: "اذهب للتطبيق →",
+                
                 aboutTitle: "ℹ️ حول التطبيقات",
                 aboutText1: "مرحباً بك في مركز التطبيقات الخاص بك! هنا تجد جميع الأدوات التي تحتاجها لإدارة حياتك بشكل أفضل.",
                 aboutText2: "جميع البيانات تُحفظ تلقائياً في متصفحك (localStorage) لذا لا تقلق على فقدان المعلومات.",
@@ -419,6 +461,15 @@
                 medicineFeature4: "Secure storage",
                 medicineBtn: "Go to App →",
                 
+                bmiTitle: "My BMI",
+                bmiName: "BMI Calculator",
+                bmiDesc: "Calculate your body mass index and manage your weight",
+                bmiFeature1: "Accurate calculation",
+                bmiFeature2: "Multiple units",
+                bmiFeature3: "Clear categories",
+                bmiFeature4: "Easy to use",
+                bmiBtn: "Go to App →",
+                
                 aboutTitle: "ℹ️ About Apps",
                 aboutText1: "Welcome to your personal app center! Here you'll find all the tools you need to manage your life better.",
                 aboutText2: "All data is automatically saved in your browser (localStorage) so you don't have to worry about losing information.",
@@ -456,6 +507,15 @@
                 medicineFeature3: "Aseta tiheys",
                 medicineFeature4: "Turvallinen säilytys",
                 medicineBtn: "Siirry sovellukseen →",
+                
+                bmiTitle: "Omat BMI",
+                bmiName: "BMI Calculator",
+                bmiDesc: "Laske ruumiisi painoindeksi ja hallitse painoasi",
+                bmiFeature1: "Tarkka laskenta",
+                bmiFeature2: "Useat yksiköt",
+                bmiFeature3: "Selkeät luokat",
+                bmiFeature4: "Helppo käyttää",
+                bmiBtn: "Siirry sovellukseen →",
                 
                 aboutTitle: "ℹ️ Tietoa sovelluksista",
                 aboutText1: "Tervetuloa henkilökohtaiseen sovelluspalveluun! Täällä löydät kaikki työkalut jotka tarvitset elämäsi hallintaan.",
@@ -520,6 +580,15 @@
             document.getElementById('medicineFeature3').textContent = t.medicineFeature3;
             document.getElementById('medicineFeature4').textContent = t.medicineFeature4;
             document.getElementById('medicineBtn').textContent = t.medicineBtn;
+            
+            document.getElementById('bmiTitle').textContent = t.bmiTitle;
+            document.getElementById('bmiName').textContent = t.bmiName;
+            document.getElementById('bmiDesc').textContent = t.bmiDesc;
+            document.getElementById('bmiFeature1').textContent = t.bmiFeature1;
+            document.getElementById('bmiFeature2').textContent = t.bmiFeature2;
+            document.getElementById('bmiFeature3').textContent = t.bmiFeature3;
+            document.getElementById('bmiFeature4').textContent = t.bmiFeature4;
+            document.getElementById('bmiBtn').textContent = t.bmiBtn;
             
             document.getElementById('aboutTitle').textContent = t.aboutTitle;
             document.getElementById('aboutText1').textContent = t.aboutText1;

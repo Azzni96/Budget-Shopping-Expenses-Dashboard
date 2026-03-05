@@ -128,6 +128,42 @@
             background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
         }
 
+        .password-card .app-header {
+            background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);
+        }
+
+        .password-card .app-features li:before {
+            color: #ec4899;
+        }
+
+        .password-card .app-button {
+            background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);
+        }
+
+        .reading-card .app-header {
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+        }
+
+        .reading-card .app-features li:before {
+            color: #8b5cf6;
+        }
+
+        .reading-card .app-button {
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+        }
+
+        .pdf-card .app-header {
+            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+        }
+
+        .pdf-card .app-features li:before {
+            color: #d97706;
+        }
+
+        .pdf-card .app-button {
+            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+        }
+
         .app-icon {
             font-size: 3em;
             margin-bottom: 10px;
@@ -360,6 +396,69 @@
                     <button class="app-button" id="bmiBtn">اذهب للتطبيق →</button>
                 </div>
             </a>
+
+            <!-- Password Generator App -->
+            <a href="password.html" class="app-card password-card" id="passwordCard">
+                <div class="app-header">
+                    <div class="app-icon">🔐</div>
+                    <span id="passwordTitle">كلمة السر</span>
+                </div>
+                <div class="app-content">
+                    <div class="app-title" id="passwordName">Password Generator</div>
+                    <p class="app-description" id="passwordDesc">
+                        أنشئ كلمات مرور قوية وآمنة بسهولة
+                    </p>
+                    <ul class="app-features">
+                        <li id="passwordFeature1">كلمات قوية</li>
+                        <li id="passwordFeature2">خيارات مخصصة</li>
+                        <li id="passwordFeature3">مؤشر أمان</li>
+                        <li id="passwordFeature4">نسخ سريع</li>
+                    </ul>
+                    <button class="app-button" id="passwordBtn">اذهب للتطبيق →</button>
+                </div>
+            </a>
+
+            <!-- Reading Tracker App -->
+            <a href="reading.html" class="app-card reading-card" id="readingCard">
+                <div class="app-header">
+                    <div class="app-icon">📚</div>
+                    <span id="readingTitle">قراءتي</span>
+                </div>
+                <div class="app-content">
+                    <div class="app-title" id="readingName">Reading Tracker</div>
+                    <p class="app-description" id="readingDesc">
+                        تتبع تقدمك في الكتب وسجل قراءتك اليومية
+                    </p>
+                    <ul class="app-features">
+                        <li id="readingFeature1">إضافة كتب</li>
+                        <li id="readingFeature2">تتبع التقدم</li>
+                        <li id="readingFeature3">إحصائيات</li>
+                        <li id="readingFeature4">متابعة مستمرة</li>
+                    </ul>
+                    <button class="app-button" id="readingBtn">اذهب للتطبيق →</button>
+                </div>
+            </a>
+
+            <!-- PDF Converter App -->
+            <a href="image-to-pdf.html" class="app-card pdf-card" id="pdfCard">
+                <div class="app-header">
+                    <div class="app-icon">🖼️</div>
+                    <span id="pdfTitle">الصور إلى PDF</span>
+                </div>
+                <div class="app-content">
+                    <div class="app-title" id="pdfName">Image to PDF</div>
+                    <p class="app-description" id="pdfDesc">
+                        حول صورك إلى ملف PDF واحد آمن
+                    </p>
+                    <ul class="app-features">
+                        <li id="pdfFeature1">سحب وإفلات</li>
+                        <li id="pdfFeature2">ترتيب حر</li>
+                        <li id="pdfFeature3">خيارات متعددة</li>
+                        <li id="pdfFeature4">تحويل سريع</li>
+                    </ul>
+                    <button class="app-button" id="pdfBtn">اذهب للتطبيق →</button>
+                </div>
+            </a>
         </div>
 
         <div class="full-width-card">
@@ -423,6 +522,33 @@
                 bmiFeature4: "سهل الاستخدام",
                 bmiBtn: "اذهب للتطبيق →",
                 
+                passwordTitle: "كلمة السر",
+                passwordName: "Password Generator",
+                passwordDesc: "أنشئ كلمات مرور قوية وآمنة بسهولة",
+                passwordFeature1: "كلمات قوية",
+                passwordFeature2: "خيارات مخصصة",
+                passwordFeature3: "مؤشر أمان",
+                passwordFeature4: "نسخ سريع",
+                passwordBtn: "اذهب للتطبيق →",
+                
+                readingTitle: "قراءتي",
+                readingName: "Reading Tracker",
+                readingDesc: "تتبع تقدمك في الكتب وسجل قراءتك اليومية",
+                readingFeature1: "إضافة كتب",
+                readingFeature2: "تتبع التقدم",
+                readingFeature3: "إحصائيات",
+                readingFeature4: "متابعة مستمرة",
+                readingBtn: "اذهب للتطبيق →",
+                
+                pdfTitle: "الصور إلى PDF",
+                pdfName: "Image to PDF",
+                pdfDesc: "حول صورك إلى ملف PDF واحد آمن",
+                pdfFeature1: "سحب وإفلات",
+                pdfFeature2: "ترتيب حر",
+                pdfFeature3: "خيارات متعددة",
+                pdfFeature4: "تحويل سريع",
+                pdfBtn: "اذهب للتطبيق →",
+                
                 aboutTitle: "ℹ️ حول التطبيقات",
                 aboutText1: "مرحباً بك في مركز التطبيقات الخاص بك! هنا تجد جميع الأدوات التي تحتاجها لإدارة حياتك بشكل أفضل.",
                 aboutText2: "جميع البيانات تُحفظ تلقائياً في متصفحك (localStorage) لذا لا تقلق على فقدان المعلومات.",
@@ -470,6 +596,33 @@
                 bmiFeature4: "Easy to use",
                 bmiBtn: "Go to App →",
                 
+                passwordTitle: "Password",
+                passwordName: "Password Generator",
+                passwordDesc: "Create strong and secure passwords easily",
+                passwordFeature1: "Strong passwords",
+                passwordFeature2: "Custom options",
+                passwordFeature3: "Security indicator",
+                passwordFeature4: "Quick copy",
+                passwordBtn: "Go to App →",
+                
+                readingTitle: "My Reading",
+                readingName: "Reading Tracker",
+                readingDesc: "Track your reading progress and keep a daily reading log",
+                readingFeature1: "Add books",
+                readingFeature2: "Track progress",
+                readingFeature3: "Statistics",
+                readingFeature4: "Continuous tracking",
+                readingBtn: "Go to App →",
+                
+                pdfTitle: "Images to PDF",
+                pdfName: "Image to PDF",
+                pdfDesc: "Convert your images into a single secure PDF file",
+                pdfFeature1: "Drag and drop",
+                pdfFeature2: "Free ordering",
+                pdfFeature3: "Multiple options",
+                pdfFeature4: "Quick conversion",
+                pdfBtn: "Go to App →",
+                
                 aboutTitle: "ℹ️ About Apps",
                 aboutText1: "Welcome to your personal app center! Here you'll find all the tools you need to manage your life better.",
                 aboutText2: "All data is automatically saved in your browser (localStorage) so you don't have to worry about losing information.",
@@ -516,6 +669,33 @@
                 bmiFeature3: "Selkeät luokat",
                 bmiFeature4: "Helppo käyttää",
                 bmiBtn: "Siirry sovellukseen →",
+                
+                passwordTitle: "Salasana",
+                passwordName: "Password Generator",
+                passwordDesc: "Luo vahvoja ja turvallisia salasanoja helposti",
+                passwordFeature1: "Vahvat salasanat",
+                passwordFeature2: "Mukautetut vaihtoehdot",
+                passwordFeature3: "Turvallisuusindikaattori",
+                passwordFeature4: "Nopea kopiointi",
+                passwordBtn: "Siirry sovellukseen →",
+                
+                readingTitle: "Lukemiseni",
+                readingName: "Reading Tracker",
+                readingDesc: "Seuraa lukemisen edistystä ja pidä päivittäistä lukemistapahtumaa",
+                readingFeature1: "Lisää kirjoja",
+                readingFeature2: "Seuraa edistystä",
+                readingFeature3: "Tilastot",
+                readingFeature4: "Jatkuva seuranta",
+                readingBtn: "Siirry sovellukseen →",
+                
+                pdfTitle: "Kuvista PDF",
+                pdfName: "Image to PDF",
+                pdfDesc: "Muunna kuvasi yhdeksi turvalliseksi PDF-tiedostoksi",
+                pdfFeature1: "Vedä ja pudota",
+                pdfFeature2: "Vapaa tilaus",
+                pdfFeature3: "Useita vaihtoehtoja",
+                pdfFeature4: "Nopea muuntaminen",
+                pdfBtn: "Siirry sovellukseen →",
                 
                 aboutTitle: "ℹ️ Tietoa sovelluksista",
                 aboutText1: "Tervetuloa henkilökohtaiseen sovelluspalveluun! Täällä löydät kaikki työkalut jotka tarvitset elämäsi hallintaan.",
@@ -589,6 +769,33 @@
             document.getElementById('bmiFeature3').textContent = t.bmiFeature3;
             document.getElementById('bmiFeature4').textContent = t.bmiFeature4;
             document.getElementById('bmiBtn').textContent = t.bmiBtn;
+            
+            document.getElementById('passwordTitle').textContent = t.passwordTitle;
+            document.getElementById('passwordName').textContent = t.passwordName;
+            document.getElementById('passwordDesc').textContent = t.passwordDesc;
+            document.getElementById('passwordFeature1').textContent = t.passwordFeature1;
+            document.getElementById('passwordFeature2').textContent = t.passwordFeature2;
+            document.getElementById('passwordFeature3').textContent = t.passwordFeature3;
+            document.getElementById('passwordFeature4').textContent = t.passwordFeature4;
+            document.getElementById('passwordBtn').textContent = t.passwordBtn;
+            
+            document.getElementById('readingTitle').textContent = t.readingTitle;
+            document.getElementById('readingName').textContent = t.readingName;
+            document.getElementById('readingDesc').textContent = t.readingDesc;
+            document.getElementById('readingFeature1').textContent = t.readingFeature1;
+            document.getElementById('readingFeature2').textContent = t.readingFeature2;
+            document.getElementById('readingFeature3').textContent = t.readingFeature3;
+            document.getElementById('readingFeature4').textContent = t.readingFeature4;
+            document.getElementById('readingBtn').textContent = t.readingBtn;
+            
+            document.getElementById('pdfTitle').textContent = t.pdfTitle;
+            document.getElementById('pdfName').textContent = t.pdfName;
+            document.getElementById('pdfDesc').textContent = t.pdfDesc;
+            document.getElementById('pdfFeature1').textContent = t.pdfFeature1;
+            document.getElementById('pdfFeature2').textContent = t.pdfFeature2;
+            document.getElementById('pdfFeature3').textContent = t.pdfFeature3;
+            document.getElementById('pdfFeature4').textContent = t.pdfFeature4;
+            document.getElementById('pdfBtn').textContent = t.pdfBtn;
             
             document.getElementById('aboutTitle').textContent = t.aboutTitle;
             document.getElementById('aboutText1').textContent = t.aboutText1;

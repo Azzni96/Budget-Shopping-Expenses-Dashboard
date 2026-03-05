@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="htmlElement">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">تحويل الصور إلى PDF</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfkit/0.14.0/pdfkit.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            direction: rtl;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .top-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .back-button {
+            padding: 10px 18px;
+            border: 2px solid white;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .language-selector {
+            display: flex;
+            gap: 10px;
+        }
+
+        .lang-btn {
+            padding: 10px 18px;
+            border: 2px solid white;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .lang-btn.active {
+            background: white;
+            color: #667eea;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            padding-top: 20px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .left-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .upload-section {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .upload-area {
+            border: 3px dashed #667eea;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.5);
+            margin-bottom: 15px;
+        }
+
+        .upload-area:hover {
+            border-color: #764ba2;
+            background: white;
+            transform: scale(1.02);
+        }
+
+        .upload-area.dragover {
+            border-color: #764ba2;
+            background: white;
+            transform: scale(1.02);
+        }
+
+        .upload-icon {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+
+        .upload-text {
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .upload-hint {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        .options-panel {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .options-title {
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .option-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .option-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .option-label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+        }
+
+        select, input[type="number"], input[type="text"], input[type="checkbox"] {
+            width: 100%;
+            padding: 8px 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 0.9em;
+            font-family: inherit;
+        }
+
+        input[type="checkbox"] {
+            width: auto;
+            margin-right: 8px;
+        }
+
+        .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .color-input {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        input[type="color"] {
+            width: 50px;
+            height: 40px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .pdf-btn, .clear-btn {
+            padding: 12px 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .pdf-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            grid-column: span 2;
+        }
+
+        .pdf-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+        }
+
+        .pdf-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .clear-btn {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .clear-btn:hover {
+            background: #f8f9ff;
+            transform: translateY(-2px);
+        }
+
+        .preview-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .preview-title {
+            font-size: 1.2em;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .images-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 15px;
+            min-height: 200px;
+        }
+
+        .image-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #f0f0f0;
+            aspect-ratio: 1;
+            cursor: grab;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .image-item:hover {
+            transform: scale(1.05);
+            border-color: #667eea;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .image-preview {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .image-order {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: #667eea;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9em;
+        }
+
+        .image-actions {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            gap: 5px;
+            padding: 5px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .image-item:hover .image-actions {
+            opacity: 1;
+        }
+
+        .action-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .action-btn:hover {
+            background: #ef4444;
+            transform: scale(1.1);
+        }
+
+        .action-btn.rotate {
+            background: rgba(102, 126, 234, 0.5);
+        }
+
+        .action-btn.rotate:hover {
+            background: #667eea;
+        }
+
+        .empty-message {
+            text-align: center;
+            color: #999;
+            padding: 40px;
+            font-size: 1em;
+        }
+
+        .stats-box {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 12px;
+            background: #f9fafb;
+            border-radius: 8px;
+        }
+
+        .stat-value {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .stat-label {
+            font-size: 0.8em;
+            color: #999;
+            margin-top: 5px;
+        }
+
+        .upload-btn-text {
+            color: white;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 12px 25px;
+            border-radius: 8px;
+            display: none;
+            margin-top: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .upload-btn-text:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        @media (max-width: 1024px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .images-grid {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            }
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding: 10px;
+            }
+
+            header h1 {
+                font-size: 1.3em;
+            }
+
+            .upload-area {
+                padding: 20px 10px;
+            }
+
+            .images-grid {
+                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+                gap: 10px;
+            }
+
+            .action-buttons {
+                grid-template-columns: 1fr;
+            }
+
+            .pdf-btn {
+                grid-column: span 1;
+            }
+
+            .stats-box {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="top-controls">
+            <a href="index.html" class="back-button" id="backBtn">← الرجوع للصفحة الرئيسية</a>
+            <div class="language-selector">
+                <button class="lang-btn active" data-lang="ar" onclick="changeLanguage('ar')">العربية</button>
+                <button class="lang-btn" data-lang="en" onclick="changeLanguage('en')">English</button>
+                <button class="lang-btn" data-lang="fi" onclick="changeLanguage('fi')">Suomi</button>
+            </div>
+        </div>
+
+        <header>
+            <h1 id="mainTitle">🖼️ تحويل الصور إلى PDF</h1>
+            <p id="mainSubtitle">أضف صورك وحولها إلى ملف PDF واحد</p>
+        </header>
+
+        <div class="main-grid">
+            <div class="left-panel">
+                <div class="upload-section">
+                    <div class="upload-area" id="uploadArea" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" onclick="document.getElementById('fileInput').click()">
+                        <div class="upload-icon">📷</div>
+                        <div class="upload-text" id="uploadText">اسحب الصور هنا أو انقر</div>
+                        <div class="upload-hint" id="uploadHint">PNG, JPG, BMP, WebP</div>
+                    </div>
+                    <input type="file" id="fileInput" multiple accept="image/*" onchange="handleFileSelect(event)">
+                </div>
+
+                <div class="options-panel">
+                    <div class="options-title" id="optionsTitle">⚙️ الإعدادات</div>
+
+                    <!-- Basic Options -->
+                    <div class="option-item">
+                        <label class="option-label" id="orientationLabel">الاتجاه:</label>
+                        <select id="orientation" onchange="updatePreview()">
+                            <option value="portrait">عمودي</option>
+                            <option value="landscape">أفقي</option>
+                        </select>
+                    </div>
+
+                    <div class="option-item">
+                        <label class="option-label" id="pageSizeLabel">حجم:</label>
+                        <select id="pageSize" onchange="updatePreview()">
+                            <option value="a4">A4</option>
+                            <option value="letter">Letter</option>
+                            <option value="a3">A3</option>
+                        </select>
+                    </div>
+
+                    <div class="option-item">
+                        <label class="option-label" id="imagesPerPageLabel">صور/صفحة:</label>
+                        <select id="imagesPerPage" onchange="updatePreview()">
+                            <option value="1">1 صورة</option>
+                            <option value="2">2 صورة</option>
+                            <option value="4">4 صور</option>
+                        </select>
+                    </div>
+
+                    <div class="option-item">
+                        <label class="option-label" id="alignmentLabel">موضع:</label>
+                        <select id="alignment">
+                            <option value="center">وسط</option>
+                            <option value="left">يسار</option>
+                            <option value="right">يمين</option>
+                        </select>
+                    </div>
+
+                    <div class="option-item">
+                        <label class="option-label" id="qualityLabel">الجودة:</label>
+                        <select id="quality">
+                            <option value="high">عالية</option>
+                            <option value="medium" selected>متوسطة</option>
+                            <option value="low">منخفضة</option>
+                        </select>
+                    </div>
+
+                    <!-- Advanced Options -->
+                    <div class="option-item">
+                        <label class="option-label" id="filenameLabel">اسم الملف:</label>
+                        <input type="text" id="filename" placeholder="images" value="images">
+                    </div>
+
+                    <div class="option-item">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="addPageNumbers" checked>
+                            <label for="addPageNumbers" class="option-label" id="pageNumbersLabel" style="margin: 0;">أرقام الصفحات</label>
+                        </div>
+                    </div>
+
+                    <div class="option-item">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="addDate" checked>
+                            <label for="addDate" class="option-label" id="dateLabel" style="margin: 0;">إضافة التاريخ</label>
+                        </div>
+                    </div>
+
+                    <div class="option-item">
+                        <label class="option-label" id="bgColorLabel">لون خلفية:</label>
+                        <div class="color-input">
+                            <input type="color" id="bgColor" value="#ffffff">
+                            <span style="color: #666; font-size: 0.9em;" id="bgColorName">أبيض</span>
+                        </div>
+                    </div>
+
+                    <div class="option-item">
+                        <label class="option-label" id="watermarkLabel">علامة مائية:</label>
+                        <input type="text" id="watermark" placeholder="النص" style="font-size: 0.85em;">
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="pdf-btn" onclick="generatePDF()" id="generateBtn" disabled>📥 إنشاء PDF</button>
+                        <button class="clear-btn" onclick="clearAll()">🗑️ مسح</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="preview-section">
+                <div class="preview-title" id="previewTitle">معاينة الصور</div>
+                <div class="images-grid" id="imagesGrid">
+                    <div class="empty-message" id="emptyMessage">لم يتم إضافة صور</div>
+                </div>
+                <div class="stats-box" id="statsBox" style="display: none;">
+                    <div class="stat-item">
+                        <div class="stat-value" id="totalImagesCount">0</div>
+                        <div class="stat-label" id="totalImagesLabel">الصور</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="totalPagesCount">0</div>
+                        <div class="stat-label" id="totalPagesLabel">الصفحات</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="estimatedSizeCount">0 KB</div>
+                        <div class="stat-label" id="estimatedSizeLabel">الحجم</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const translations = {
+            ar: {
+                backBtn: "← الرجوع للصفحة الرئيسية",
+                pageTitle: "تحويل الصور إلى PDF",
+                mainTitle: "🖼️ صور ← PDF",
+                mainSubtitle: "حول صورك إلى PDF احترافي",
+                uploadText: "اسحب الصور هنا أو انقر",
+                uploadHint: "PNG, JPG, BMP, WebP مدعومة",
+                optionsTitle: "⚙️ الإعدادات",
+                orientationLabel: "الاتجاه:",
+                pageSizeLabel: "حجم الصفحة:",
+                imagesPerPageLabel: "عدد الصور بالصفحة:",
+                alignmentLabel: "موضع الصور:",
+                qualityLabel: "الجودة:",
+                filenameLabel: "اسم الملف:",
+                pageNumbersLabel: "إضافة أرقام الصفحات",
+                dateLabel: "إضافة التاريخ",
+                bgColorLabel: "لون الخلفية:",
+                watermarkLabel: "علامة مائية:",
+                generateBtn: "📥 إنشاء PDF",
+                clearBtn: "🗑️ مسح الكل",
+                previewTitle: "معاينة الصور",
+                emptyMessage: "لم يتم إضافة صور بعد",
+                totalImagesLabel: "الصور",
+                totalPagesLabel: "الصفحات",
+                estimatedSizeLabel: "الحجم التقديري",
+                success: "✅ تم إنشاء PDF بنجاح!",
+                error: "❌ حدث خطأ ما",
+                errorInvalidFile: "❌ نوع الملف غير صحيح"
+            },
+            en: {
+                backBtn: "← Back to Home",
+                pageTitle: "Convert Images to PDF",
+                mainTitle: "🖼️ Images to PDF",
+                mainSubtitle: "Convert your images to professional PDF",
+                uploadText: "Drag images here or click",
+                uploadHint: "PNG, JPG, BMP, WebP supported",
+                optionsTitle: "⚙️ Settings",
+                orientationLabel: "Orientation:",
+                pageSizeLabel: "Page Size:",
+                imagesPerPageLabel: "Images per Page:",
+                alignmentLabel: "Alignment:",
+                qualityLabel: "Quality:",
+                filenameLabel: "Filename:",
+                pageNumbersLabel: "Add page numbers",
+                dateLabel: "Add date",
+                bgColorLabel: "Background Color:",
+                watermarkLabel: "Watermark:",
+                generateBtn: "📥 Generate PDF",
+                clearBtn: "🗑️ Clear All",
+                previewTitle: "Images Preview",
+                emptyMessage: "No images added yet",
+                totalImagesLabel: "Images",
+                totalPagesLabel: "Pages",
+                estimatedSizeLabel: "Estimated Size",
+                success: "✅ PDF created successfully!",
+                error: "❌ Something went wrong",
+                errorInvalidFile: "❌ Invalid file type"
+            },
+            fi: {
+                backBtn: "← Takaisin Etusivulle",
+                pageTitle: "Muunna kuvia PDF:ksi",
+                mainTitle: "🖼️ Kuvat PDF:ksi",
+                mainSubtitle: "Muunna kuvasi ammattimaiseksi PDF:ksi",
+                uploadText: "Vedä kuvat tai klikkaa",
+                uploadHint: "PNG, JPG, BMP, WebP tuetaan",
+                optionsTitle: "⚙️ Asetukset",
+                orientationLabel: "Suunta:",
+                pageSizeLabel: "Sivun koko:",
+                imagesPerPageLabel: "Kuvia sivulla:",
+                alignmentLabel: "Tasaus:",
+                qualityLabel: "Laatu:",
+                filenameLabel: "Tiedostonimi:",
+                pageNumbersLabel: "Lisää sivunumerot",
+                dateLabel: "Lisää päivämäärä",
+                bgColorLabel: "Taustaväri:",
+                watermarkLabel: "Vesileima:",
+                generateBtn: "📥 Luo PDF",
+                clearBtn: "🗑️ Tyhjennä",
+                previewTitle: "Kuvien esikatselu",
+                emptyMessage: "Ei lisätty kuvia vielä",
+                totalImagesLabel: "Kuvat",
+                totalPagesLabel: "Sivut",
+                estimatedSizeLabel: "Arvioitu koko",
+                success: "✅ PDF luotu onnistuneesti!",
+                error: "❌ Tapahtui virhe",
+                errorInvalidFile: "❌ Virheellinen tiedostotyyppi"
+            }
+        };
+
+        let currentLanguage = localStorage.getItem('pdfLanguage') || 'ar';
+        let images = [];
+        let imageRotations = {};
+
+        function changeLanguage(lang) {
+            currentLanguage = lang;
+            localStorage.setItem('pdfLanguage', lang);
+
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`[data-lang="${lang}"]`).classList.add('active');
+
+            const htmlElement = document.getElementById('htmlElement');
+            const dir = lang === 'ar' ? 'rtl' : 'ltr';
+            htmlElement.setAttribute('dir', dir);
+            htmlElement.setAttribute('lang', lang);
+            document.body.style.direction = dir;
+
+            updateAllTexts();
+        }
+
+        function updateAllTexts() {
+            const t = translations[currentLanguage];
+            Object.entries(t).forEach(([key, value]) => {
+                const el = document.getElementById(key);
+                if (el) el.textContent = value;
+            });
+            updateBgColorName();
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            document.getElementById('uploadArea').classList.add('dragover');
+        }
+
+        function handleDragLeave(e) {
+            e.preventDefault();
+            document.getElementById('uploadArea').classList.remove('dragover');
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            document.getElementById('uploadArea').classList.remove('dragover');
+            processFiles(e.dataTransfer.files);
+        }
+
+        function handleFileSelect(e) {
+            processFiles(e.target.files);
+        }
+
+        function processFiles(files) {
+            for (let file of files) {
+                if (!file.type.startsWith('image/')) {
+                    alert(translations[currentLanguage].errorInvalidFile);
+                    continue;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const id = Date.now() + Math.random();
+                    images.push({ id, src: e.target.result, name: file.name });
+                    imageRotations[id] = 0;
+                    renderImages();
+                    updateStats();
+                    updateButtons();
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function renderImages() {
+            const grid = document.getElementById('imagesGrid');
+            if (images.length === 0) {
+                grid.innerHTML = `<div class="empty-message">${translations[currentLanguage].emptyMessage}</div>`;
+                document.getElementById('statsBox').style.display = 'none';
+                return;
+            }
+
+            grid.innerHTML = images.map((img, idx) => `
+                <div class="image-item">
+                    <img src="${img.src}" alt="Image ${idx}" class="image-preview" style="transform: rotate(${imageRotations[img.id] || 0}deg);">
+                    <div class="image-order">${idx + 1}</div>
+                    <div class="image-actions">
+                        <button class="action-btn rotate" onclick="rotateImage(${images.indexOf(img)})" title="دوران">🔄</button>
+                        <button class="action-btn" onclick="deleteImage(${images.indexOf(img)})" title="حذف">✕</button>
+                    </div>
+                </div>
+            `).join('');
+            document.getElementById('statsBox').style.display = 'grid';
+        }
+
+        function rotateImage(idx) {
+            const img = images[idx];
+            imageRotations[img.id] = (imageRotations[img.id] || 0) + 90;
+            renderImages();
+        }
+
+        function deleteImage(idx) {
+            const img = images[idx];
+            delete imageRotations[img.id];
+            images.splice(idx, 1);
+            renderImages();
+            updateStats();
+            updateButtons();
+        }
+
+        function updateStats() {
+            const imagesPerPage = parseInt(document.getElementById('imagesPerPage').value);
+            const totalPages = Math.ceil(images.length / imagesPerPage);
+            const estimatedSize = Math.ceil(images.length * 150);
+
+            document.getElementById('totalImagesCount').textContent = images.length;
+            document.getElementById('totalPagesCount').textContent = totalPages;
+            document.getElementById('estimatedSizeCount').textContent = `${estimatedSize} KB`;
+        }
+
+        function updateButtons() {
+            document.getElementById('generateBtn').disabled = images.length === 0;
+        }
+
+        function updatePreview() {
+            updateStats();
+        }
+
+        function updateBgColorName() {
+            const color = document.getElementById('bgColor').value;
+            const names = { '#ffffff': 'أبيض', '#f0f0f0': 'رمادي فاتح', '#000000': 'أسود' };
+            document.getElementById('bgColorName').textContent = names[color] || color;
+        }
+
+        function clearAll() {
+            images = [];
+            imageRotations = {};
+            document.getElementById('fileInput').value = '';
+            renderImages();
+            updateButtons();
+        }
+
+        async function generatePDF() {
+            const t = translations[currentLanguage];
+            if (images.length === 0) return;
+
+            const { jsPDF } = window.jspdf;
+            const imagesPerPage = parseInt(document.getElementById('imagesPerPage').value);
+            const orientation = document.getElementById('orientation').value;
+            const pageSize = document.getElementById('pageSize').value;
+            const quality = document.getElementById('quality').value === 'high' ? 0.95 : document.getElementById('quality').value === 'medium' ? 0.8 : 0.6;
+            const filename = document.getElementById('filename').value || 'images';
+            const addPageNumbers = document.getElementById('addPageNumbers').checked;
+            const addDate = document.getElementById('addDate').checked;
+            const bgColor = document.getElementById('bgColor').value;
+            const watermark = document.getElementById('watermark').value;
+            const alignment = document.getElementById('alignment').value;
+
+            const pdf = new jsPDF({ orientation, unit: 'mm', format: pageSize });
+            const pageWidth = pdf.internal.pageSize.getWidth();
+            const pageHeight = pdf.internal.pageSize.getHeight();
+
+            let pageNum = 1;
+            let imageIdx = 0;
+
+            while (imageIdx < images.length) {
+                // مسح الخلفية
+                pdf.setFillColor(...hexToRgb(bgColor));
+                pdf.rect(0, 0, pageWidth, pageHeight, 'F');
+
+                // إضافة التاريخ
+                if (addDate) {
+                    const date = new Date().toLocaleDateString(currentLanguage === 'ar' ? 'ar-SA' : currentLanguage === 'fi' ? 'fi-FI' : 'en-US');
+                    pdf.setFontSize(8);
+                    pdf.text(date, 10, 10);
+                }
+
+                // إضافة الصور
+                const imgsOnPage = [];
+                for (let i = 0; i < imagesPerPage && imageIdx < images.length; i++) {
+                    imgsOnPage.push(images[imageIdx++]);
+                }
+
+                await addImagesToPage(pdf, imgsOnPage, pageWidth, pageHeight, imagesPerPage, alignment, quality);
+
+                // إضافة علامة مائية
+                if (watermark) {
+                    addWatermark(pdf, watermark, pageWidth, pageHeight);
+                }
+
+                // إضافة رقم الصفحة
+                if (addPageNumbers) {
+                    pdf.setFontSize(10);
+                    pdf.text(String(pageNum), pageWidth - 15, pageHeight - 10);
+                }
+
+                pageNum++;
+                if (imageIdx < images.length) {
+                    pdf.addPage();
+                }
+            }
+
+            pdf.save(filename + '.pdf');
+            alert(t.success);
+        }
+
+        function addImagesToPage(pdf, imgsOnPage, pageWidth, pageHeight, imagesPerPage, alignment, quality) {
+            return new Promise((resolve) => {
+                const margin = 8;
+                const padding = 3;
+                const availWidth = pageWidth - 2 * margin;
+                const availHeight = pageHeight - 30; // ترك مساحة للتاريخ والصفحة
+
+                let cols = 1, rows = 1;
+                if (imagesPerPage === 2) {
+                    cols = 1;
+                    rows = 2;
+                } else if (imagesPerPage === 4) {
+                    cols = 2;
+                    rows = 2;
+                }
+
+                const imgWidth = (availWidth - (cols - 1) * padding) / cols;
+                const imgHeight = (availHeight - (rows - 1) * padding) / rows;
+
+                // تحميل جميع الصور أولاً
+                let loadedImgs = [];
+                let loadedCount = 0;
+
+                if (imgsOnPage.length === 0) {
+                    resolve();
+                    return;
+                }
+
+                for (let i = 0; i < imgsOnPage.length; i++) {
+                    const img = imgsOnPage[i];
+                    const img_obj = new Image();
+                    img_obj.crossOrigin = 'anonymous';
+                    img_obj.src = img.src;
+
+                    img_obj.onload = function() {
+                        loadedImgs[i] = this;
+                        loadedCount++;
+
+                        // عندما تنتهي جميع الصور من التحميل
+                        if (loadedCount === imgsOnPage.length) {
+                            // أضف الصور إلى PDF
+                            for (let j = 0; j < loadedImgs.length; j++) {
+                                if (!loadedImgs[j]) continue;
+                                
+                                const imgObj = loadedImgs[j];
+                                const row = Math.floor(j / cols);
+                                const col = j % cols;
+
+                                let x = margin + col * (imgWidth + padding);
+                                let y = 20 + row * (imgHeight + padding); // 20 بدل 5 للتاريخ
+
+                                const ratio = imgObj.width / imgObj.height;
+                                let finalWidth = imgWidth;
+                                let finalHeight = imgHeight;
+
+                                if (ratio > imgWidth / imgHeight) {
+                                    finalHeight = imgWidth / ratio;
+                                } else {
+                                    finalWidth = imgHeight * ratio;
+                                }
+
+                                // توسيط الصورة في المربع المتاح
+                                const offsetX = x + (imgWidth - finalWidth) / 2;
+                                const offsetY = y + (imgHeight - finalHeight) / 2;
+
+                                const rotation = imageRotations[imgsOnPage[j].id] || 0;
+                                if (rotation !== 0) {
+                                    pdf.save();
+                                    pdf.setCurrentTransformMatrix([1, 0, 0, 1, offsetX + finalWidth / 2, offsetY + finalHeight / 2]);
+                                    pdf.rotate(rotation);
+                                    pdf.addImage(imgsOnPage[j].src, 'JPEG', -finalWidth / 2, -finalHeight / 2, finalWidth, finalHeight);
+                                    pdf.restore();
+                                } else {
+                                    pdf.addImage(imgsOnPage[j].src, 'JPEG', offsetX, offsetY, finalWidth, finalHeight);
+                                }
+                            }
+                            resolve();
+                        }
+                    };
+
+                    img_obj.onerror = function() {
+                        loadedCount++;
+                        if (loadedCount === imgsOnPage.length) {
+                            resolve();
+                        }
+                    };
+                }
+            });
+        }
+
+        function addWatermark(pdf, text, pageWidth, pageHeight) {
+            if (!text) return;
+
+            // إنشاء canvas لرسم النص العربي
+            const canvas = document.createElement('canvas');
+            canvas.width = 800;
+            canvas.height = 200;
+            const ctx = canvas.getContext('2d');
+
+            // تعيين الخط والألوان
+            ctx.font = 'bold 100px Arial';
+            ctx.fillStyle = 'rgba(200, 200, 200, 0.3)';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+
+            // رسم النص
+            ctx.save();
+            ctx.translate(canvas.width / 2, canvas.height / 2);
+            ctx.rotate(-Math.PI / 4); // تدوير بزاوية -45 درجة
+            ctx.fillText(text, 0, 0);
+            ctx.restore();
+
+            // تحويل canvas إلى صورة وإضافتها إلى PDF
+            const imgData = canvas.toDataURL('image/png');
+            const watermarkWidth = pageWidth * 1.2;
+            const watermarkHeight = pageHeight * 0.3;
+            
+            pdf.addImage(
+                imgData,
+                'PNG',
+                (pageWidth - watermarkWidth) / 2,
+                (pageHeight - watermarkHeight) / 2,
+                watermarkWidth,
+                watermarkHeight
+            );
+        }
+
+        function hexToRgb(hex) {
+            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? [parseInt(result[1], 16), parseInt(result[2], 16), parseInt(result[3], 16)] : [255, 255, 255];
+        }
+
+        window.addEventListener('DOMContentLoaded', function() {
+            currentLanguage = localStorage.getItem('pdfLanguage') || 'ar';
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`[data-lang="${currentLanguage}"]`).classList.add('active');
+
+            const htmlElement = document.getElementById('htmlElement');
+            const dir = currentLanguage === 'ar' ? 'rtl' : 'ltr';
+            htmlElement.setAttribute('dir', dir);
+            document.body.style.direction = dir;
+
+            updateAllTexts();
+            renderImages();
+        });
+
+        document.getElementById('bgColor').addEventListener('change', updateBgColorName);
+    </script>
+</body>
+</html>

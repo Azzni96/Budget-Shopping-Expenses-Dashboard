@@ -164,6 +164,18 @@
             background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
         }
 
+        .divider-card .app-header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .divider-card .app-features li:before {
+            color: #f093fb;
+        }
+
+        .divider-card .app-button {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
         .app-icon {
             font-size: 3em;
             margin-bottom: 10px;
@@ -459,6 +471,27 @@
                     <button class="app-button" id="pdfBtn">اذهب للتطبيق →</button>
                 </div>
             </a>
+
+            <!-- Quantity Divider App -->
+            <a href="divider.html" class="app-card divider-card" id="dividerCard">
+                <div class="app-header">
+                    <div class="app-icon">📊</div>
+                    <span id="dividerTitle">عداد القسمة</span>
+                </div>
+                <div class="app-content">
+                    <div class="app-title" id="dividerName">Quantity Divider</div>
+                    <p class="app-description" id="dividerDesc">
+                        قسم الكميات بالتساوي أو بشكل متتالي
+                    </p>
+                    <ul class="app-features">
+                        <li id="dividerFeature1">قسمة متساوية</li>
+                        <li id="dividerFeature2">قسمة متتالية</li>
+                        <li id="dividerFeature3">حساب فوري</li>
+                        <li id="dividerFeature4">سهل الاستخدام</li>
+                    </ul>
+                    <button class="app-button" id="dividerBtn">اذهب للتطبيق →</button>
+                </div>
+            </a>
         </div>
 
         <div class="full-width-card">
@@ -549,6 +582,15 @@
                 pdfFeature4: "تحويل سريع",
                 pdfBtn: "اذهب للتطبيق →",
                 
+                dividerTitle: "عداد القسمة",
+                dividerName: "Quantity Divider",
+                dividerDesc: "قسم الكميات بالتساوي أو بشكل متتالي",
+                dividerFeature1: "قسمة متساوية",
+                dividerFeature2: "قسمة متتالية",
+                dividerFeature3: "حساب فوري",
+                dividerFeature4: "سهل الاستخدام",
+                dividerBtn: "اذهب للتطبيق →",
+                
                 aboutTitle: "ℹ️ حول التطبيقات",
                 aboutText1: "مرحباً بك في مركز التطبيقات الخاص بك! هنا تجد جميع الأدوات التي تحتاجها لإدارة حياتك بشكل أفضل.",
                 aboutText2: "جميع البيانات تُحفظ تلقائياً في متصفحك (localStorage) لذا لا تقلق على فقدان المعلومات.",
@@ -623,6 +665,15 @@
                 pdfFeature4: "Quick conversion",
                 pdfBtn: "Go to App →",
                 
+                dividerTitle: "Quantity Divider",
+                dividerName: "Quantity Divider",
+                dividerDesc: "Divide quantities equally or sequentially",
+                dividerFeature1: "Equal division",
+                dividerFeature2: "Sequential division",
+                dividerFeature3: "Instant calculation",
+                dividerFeature4: "Easy to use",
+                dividerBtn: "Go to App →",
+                
                 aboutTitle: "ℹ️ About Apps",
                 aboutText1: "Welcome to your personal app center! Here you'll find all the tools you need to manage your life better.",
                 aboutText2: "All data is automatically saved in your browser (localStorage) so you don't have to worry about losing information.",
@@ -696,6 +747,15 @@
                 pdfFeature3: "Useita vaihtoehtoja",
                 pdfFeature4: "Nopea muuntaminen",
                 pdfBtn: "Siirry sovellukseen →",
+                
+                dividerTitle: "Määrän Jakaja",
+                dividerName: "Quantity Divider",
+                dividerDesc: "Jaa määrät tasaisesti tai peräkkäin",
+                dividerFeature1: "Tasainen jako",
+                dividerFeature2: "Peräkkäinen jako",
+                dividerFeature3: "Pikainen laskenta",
+                dividerFeature4: "Helppo käyttää",
+                dividerBtn: "Siirry sovellukseen →",
                 
                 aboutTitle: "ℹ️ Tietoa sovelluksista",
                 aboutText1: "Tervetuloa henkilökohtaiseen sovelluspalveluun! Täällä löydät kaikki työkalut jotka tarvitset elämäsi hallintaan.",
@@ -796,6 +856,15 @@
             document.getElementById('pdfFeature3').textContent = t.pdfFeature3;
             document.getElementById('pdfFeature4').textContent = t.pdfFeature4;
             document.getElementById('pdfBtn').textContent = t.pdfBtn;
+            
+            document.getElementById('dividerTitle').textContent = t.dividerTitle;
+            document.getElementById('dividerName').textContent = t.dividerName;
+            document.getElementById('dividerDesc').textContent = t.dividerDesc;
+            document.getElementById('dividerFeature1').textContent = t.dividerFeature1;
+            document.getElementById('dividerFeature2').textContent = t.dividerFeature2;
+            document.getElementById('dividerFeature3').textContent = t.dividerFeature3;
+            document.getElementById('dividerFeature4').textContent = t.dividerFeature4;
+            document.getElementById('dividerBtn').textContent = t.dividerBtn;
             
             document.getElementById('aboutTitle').textContent = t.aboutTitle;
             document.getElementById('aboutText1').textContent = t.aboutText1;

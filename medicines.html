@@ -357,6 +357,149 @@
             border-radius: 12px;
         }
 
+        .daily-summary {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(245, 87, 108, 0.3);
+            text-align: center;
+        }
+
+        .daily-summary h3 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.3);
+            height: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+
+        .progress-fill {
+            background: white;
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+
+        .reset-btn {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        .reset-btn:hover {
+            background: linear-gradient(135deg, #059669, #047857);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal.show {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { 
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to { 
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-content h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .modal-content p {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .modal-btn {
+            padding: 12px 25px;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 1em;
+        }
+
+        .modal-btn.confirm {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+        }
+
+        .modal-btn.confirm:hover {
+            background: linear-gradient(135deg, #764ba2, #667eea);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .modal-btn.cancel {
+            background: white;
+            color: #667eea;
+        }
+
+        .modal-btn.cancel:hover {
+            background: #f0f0f0;
+        }
+
         @media (max-width: 768px) {
             body {
                 padding: 10px;
@@ -681,8 +824,28 @@
 
         <!-- الصفحة الثانية: عرض الأدوية -->
         <div id="viewPage" class="page-content">
+            <div id="dailySummary" class="daily-summary">
+                <h3 id="completionTitle">📊 إني اليوم</h3>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <p id="completionText">0/0 أدوية أكملت</p>
+                <button class="reset-btn" id="dailyResetBtn" onclick="showResetConfirm()">✓ انتهيت من الأدوية اليوم</button>
+            </div>
             <div class="medicine-list" id="medicineList">
                 <div class="empty-message" id="emptyMsg">لا توجد أدوية حالياً</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal للتأكيد -->
+    <div id="resetModal" class="modal">
+        <div class="modal-content">
+            <h2 id="resetTitle">✓ تم إنهاء الأدوية</h2>
+            <p id="resetMessage">هل أنت متأكد من أنك انتهيت من جميع الأدوية اليوم؟</p>
+            <div class="modal-buttons">
+                <button class="modal-btn confirm" onclick="confirmDailyReset()">نعم، انتهيت</button>
+                <button class="modal-btn cancel" onclick="closeResetModal()">إلغاء</button>
             </div>
         </div>
     </div>
@@ -713,7 +876,15 @@
                 afterMeal: "بعد الأكل",
                 beforeMeal: "قبل الأكل",
                 withMeal: "مع الأكل",
-                custom: "وقت مخصص"
+                custom: "وقت مخصص",
+                completionTitle: "📊 إنجازات اليوم",
+                completionText: "أدوية أكملت",
+                dailyResetBtn: "✓ انتهيت من الأدوية اليوم",
+                resetTitle: "✓ تم إنهاء الأدوية",
+                resetMessage: "هل أنت متأكد من أنك انتهيت من جميع الأدوية اليوم؟",
+                resetConfirm: "نعم، انتهيت",
+                resetCancel: "إلغاء",
+                resetSuccess: "تم إعادة تعيين الأدوية! ✓ نويت عام بأفضل صحة"
             },
             en: {
                 backBtn: "← Back to Home",
@@ -739,7 +910,15 @@
                 afterMeal: "After meal",
                 beforeMeal: "Before meal",
                 withMeal: "With meal",
-                custom: "Custom time"
+                custom: "Custom time",
+                completionTitle: "📊 Today's Progress",
+                completionText: "medicines completed",
+                dailyResetBtn: "✓ Finished all medicines today",
+                resetTitle: "✓ Medicines Completed",
+                resetMessage: "Are you sure you've finished all medicines today?",
+                resetConfirm: "Yes, finished",
+                resetCancel: "Cancel",
+                resetSuccess: "Medicines reset! ✓ Have a healthy day"
             },
             fi: {
                 backBtn: "← Takaisin Etusivulle",
@@ -765,7 +944,15 @@
                 afterMeal: "Ruoan jälkeen",
                 beforeMeal: "Ennen ruokaa",
                 withMeal: "Ruoan kanssa",
-                custom: "Mukautettu aika"
+                custom: "Mukautettu aika",
+                completionTitle: "📊 Päivän Edistyminen",
+                completionText: "lääkkeet otettu",
+                dailyResetBtn: "✓ Otin kaikki lääkkeet tänään",
+                resetTitle: "✓ Lääkkeet Otettu",
+                resetMessage: "Oletko varma, että olit ottanut kaikki lääkkeet tänään?",
+                resetConfirm: "Kyllä, otin",
+                resetCancel: "Peruuta",
+                resetSuccess: "Lääkkeet nollattu! ✓ Terveeksi päiväksi"
             }
         };
 
@@ -1025,6 +1212,109 @@
 
                 listContainer.appendChild(card);
             });
+            
+            // Update progress bar after rendering
+            updateDailyProgress();
+        }
+
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, m => map[m]);
+        }
+
+        // دالة للتحقق من الإعادة اليومية
+        function checkAndResetDaily() {
+            const today = new Date().toDateString();
+            const lastReset = localStorage.getItem('medicinesLastReset');
+            
+            // إذا كان التاريخ مختلفاً عن آخر إعادة تعيين
+            if (lastReset !== today) {
+                // إعادة تعيين جميع الأدوية
+                medicines.forEach(medicine => {
+                    medicine.intakes = Array(medicine.times).fill(false);
+                });
+                
+                saveMedicines();
+                localStorage.setItem('medicinesLastReset', today);
+            }
+        }
+
+        // دالة لحساب نسبة الإنجاز
+        function updateDailyProgress() {
+            if (!medicines || medicines.length === 0) {
+                const summary = document.getElementById('dailySummary');
+                if (summary) summary.style.display = 'none';
+                return;
+            }
+
+            const summary = document.getElementById('dailySummary');
+            if (summary) summary.style.display = 'block';
+
+            let totalIntakes = 0;
+            let completedIntakes = 0;
+
+            medicines.forEach(medicine => {
+                if (medicine.intakes) {
+                    totalIntakes += medicine.intakes.length;
+                    completedIntakes += medicine.intakes.filter(i => i).length;
+                }
+            });
+
+            const percentage = totalIntakes > 0 ? (completedIntakes / totalIntakes) * 100 : 0;
+            
+            const progressFill = document.getElementById('progressFill');
+            if (progressFill) {
+                progressFill.style.width = percentage + '%';
+            }
+
+            const t = translations[currentLanguage];
+            const completionText = document.getElementById('completionText');
+            if (completionText) {
+                completionText.textContent = `${completedIntakes}/${totalIntakes} ${t.completionText}`;
+            }
+        }
+
+        // دالة لإظهار نافذة التأكيد
+        function showResetConfirm() {
+            const modal = document.getElementById('resetModal');
+            if (modal) {
+                modal.classList.add('show');
+            }
+        }
+
+        // دالة لإغلاق النافذة
+        function closeResetModal() {
+            const modal = document.getElementById('resetModal');
+            if (modal) {
+                modal.classList.remove('show');
+            }
+        }
+
+        // دالة لتأكيد إعادة التعيين اليومي
+        function confirmDailyReset() {
+            const today = new Date().toDateString();
+            
+            // إعادة تعيين جميع الأدوية والمراجعات
+            medicines.forEach(medicine => {
+                medicine.intakes = Array(medicine.times).fill(false);
+            });
+
+            saveMedicines();
+            localStorage.setItem('medicinesLastReset', today);
+            
+            closeResetModal();
+            
+            const t = translations[currentLanguage];
+            alert(t.resetSuccess);
+            
+            renderMedicines();
+            updateDailyProgress();
         }
 
         function escapeHtml(text) {
@@ -1064,6 +1354,10 @@
             } catch (e) {
                 medicines = [];
             }
+            
+            // Check and reset daily
+            checkAndResetDaily();
+            
             saveMedicines();
             
             // Get saved language or default to Arabic
@@ -1089,6 +1383,7 @@
             updateAllTexts();
             updateTimeSelectors();
             renderMedicines();
+            updateDailyProgress();
         });
     </script>
 </body>
